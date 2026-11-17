@@ -1,1 +1,1919 @@
-# Drug-info
+<!DOCTYPE html>
+<html lang="th" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ศูนย์เรียนรู้และป้องกันภัยสารเสพติด | Substance Abuse Awareness & Prevention Hub</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#151e2e',
+                            950: '#090d16'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Sarabun', 'sans-serif'],
+                        heading: ['Prompt', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Prompt & Sarabun -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #090d16;
+            color: #f1f5f9;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Prompt', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(21, 30, 46, 0.78);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(148, 163, 184, 0.12);
+        }
+        .card-interactive {
+            transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-interactive:hover {
+            transform: translateY(-4px);
+            border-color: rgba(245, 158, 11, 0.45);
+            box-shadow: 0 14px 32px -12px rgba(245, 158, 11, 0.22);
+        }
+        /* Organ Hotspot Pulse */
+        .organ-node {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .organ-node:hover .organ-ring {
+            r: 22;
+            opacity: 0.5;
+        }
+        .organ-active .organ-core {
+            fill: #f59e0b !important;
+            filter: drop-shadow(0 0 10px #f59e0b);
+        }
+        .organ-active .organ-ring {
+            stroke: #f59e0b !important;
+            r: 24;
+            opacity: 0.65;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #090d16; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-slate-950">
+
+    <!-- STICKY HEADER & NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-18 py-3 flex items-center justify-between gap-4">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-rose-600 flex items-center justify-center text-slate-950 text-lg font-extrabold shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+                    <i class="fa-solid fa-shield-virus"></i>
+                </div>
+                <div>
+                    <span class="font-heading text-base sm:text-lg font-bold text-white tracking-tight block leading-none">
+                        รู้ทันภัย<span class="text-amber-400">สารเสพติด</span>
+                    </span>
+                    <span class="text-[10px] sm:text-[11px] text-slate-400 tracking-wider uppercase font-mono">
+                        Substance Awareness Hub
+                    </span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-300">
+                <a href="#encyclopedia" class="hover:text-amber-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-book-medical text-amber-400/80 text-xs"></i> คลังสารเสพติด
+                </a>
+                <a href="#brain-sim" class="hover:text-amber-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-brain text-rose-400/80 text-xs"></i> แบบจำลองสมอง
+                </a>
+                <a href="#body-impact" class="hover:text-amber-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-person-rays text-emerald-400/80 text-xs"></i> ผลกระทบอวัยวะ
+                </a>
+                <a href="#quiz-section" class="hover:text-amber-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-graduation-cap text-amber-400/80 text-xs"></i> แบบทดสอบความรู้
+                </a>
+                <a href="#first-aid" class="hover:text-amber-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-kit-medical text-rose-400/80 text-xs"></i> ปฐมพยาบาล & สายด่วน
+                </a>
+            </nav>
+
+            <!-- Emergency Quick Dial -->
+            <div class="flex items-center gap-2">
+                <a href="tel:1165" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-heading font-bold text-xs sm:text-sm shadow-lg shadow-rose-600/25 transition flex items-center gap-2">
+                    <i class="fa-solid fa-phone-volume animate-pulse"></i>
+                    <span>สายด่วน 1165</span>
+                </a>
+                <!-- Mobile Menu Toggle -->
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl bg-slate-800 text-slate-200 hover:bg-slate-700">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Nav -->
+        <div id="mobile-nav" class="hidden lg:hidden bg-slate-900 border-b border-slate-800 px-4 py-4 space-y-2 text-sm">
+            <a href="#encyclopedia" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-slate-800 text-slate-200">1. คลังข้อมูลสารเสพติดเชิงลึก</a>
+            <a href="#brain-sim" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-slate-800 text-slate-200">2. แบบจำลองการทำงานของสมอง</a>
+            <a href="#body-impact" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-slate-800 text-slate-200">3. แผนภาพผลกระทบต่ออวัยวะ</a>
+            <a href="#quiz-section" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-slate-800 text-slate-200">4. แบบทดสอบและเกียรติบัตร</a>
+            <a href="#first-aid" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-slate-800 text-slate-200">5. การสังเกตอาการ ปฐมพยาบาล & สายด่วน</a>
+        </div>
+    </header>
+
+    <!-- HERO BANNER -->
+    <section class="relative py-14 sm:py-20 overflow-hidden border-b border-slate-800/80">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-10 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[130px]"></div>
+            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-rose-600/10 rounded-full blur-[130px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="max-w-4xl mx-auto text-center space-y-6">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-amber-500/30 text-amber-400 text-xs font-medium">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    ฐานข้อมูลวิชาการ การแพทย์ และประมวลกฎหมายยาเสพติดของไทย
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight">
+                    รู้เท่าทันกลไกทำลายสมอง<br>
+                    <span class="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 bg-clip-text text-transparent">
+                        สร้างภูมิคุ้มกันภัยสารเสพติด
+                    </span>
+                </h1>
+
+                <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+                    แพลตฟอร์มการเรียนรู้เชิงโต้ตอบครบวงจร เจาะลึกข้อมูลสารเสพติด 12 ชนิด แบบจำลองสารสื่อประสาทในสมอง ผลกระทบต่ออวัยวะ โทษตามกฎหมายไทย พร้อมคู่มือช่วยชีวิตผู้เสพเกินขนาด
+                </p>
+
+                <!-- Quick Stats Bar -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-4 max-w-3xl mx-auto">
+                    <div class="glass-panel rounded-2xl p-3.5 text-center">
+                        <div class="font-heading text-2xl font-bold text-amber-400">12+</div>
+                        <div class="text-xs text-slate-400">ชนิดสารเสพติดเชิงลึก</div>
+                    </div>
+                    <div class="glass-panel rounded-2xl p-3.5 text-center">
+                        <div class="font-heading text-2xl font-bold text-rose-400">5 สภาวะ</div>
+                        <div class="text-xs text-slate-400">จำลองเซลล์ประสาทสมอง</div>
+                    </div>
+                    <div class="glass-panel rounded-2xl p-3.5 text-center">
+                        <div class="font-heading text-2xl font-bold text-emerald-400">5 ระบบ</div>
+                        <div class="text-xs text-slate-400">วิเคราะห์อวัยวะร่างกาย</div>
+                    </div>
+                    <div class="glass-panel rounded-2xl p-3.5 text-center">
+                        <div class="font-heading text-2xl font-bold text-sky-400">24 ชม.</div>
+                        <div class="text-xs text-slate-400">สายด่วนช่วยเหลือ 1165</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-3 pt-2">
+                    <a href="#encyclopedia" class="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-heading font-bold text-sm shadow-lg shadow-amber-500/20 transition flex items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass"></i> สำรวจคลังสารเสพติด
+                    </a>
+                    <a href="#brain-sim" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-heading font-semibold text-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-brain text-rose-400"></i> ทดลองจำลองสมอง
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-16 space-y-24 flex-grow w-full">
+
+        <!-- ===================================================================== -->
+        <!-- SECTION 1: COMPREHENSIVE SUBSTANCE ENCYCLOPEDIA                       -->
+        <!-- ===================================================================== -->
+        <section id="encyclopedia" class="space-y-8 scroll-mt-24">
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-slate-800 pb-6">
+                <div class="space-y-1.5">
+                    <span class="text-xs font-mono uppercase tracking-widest text-amber-400 font-semibold">01 / SUBSTANCE ENCYCLOPEDIA</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white">คลังข้อมูลสารเสพติดเชิงลึก (12 ชนิด)</h2>
+                    <p class="text-slate-400 text-sm">ค้นหา กรองตามประเภทการออกฤทธิ์ หรือระดับความอันตราย แล้วคลิกดูรายละเอียดเชิงลึกทั้ง 4 มิติ</p>
+                </div>
+
+                <!-- Search & Danger Level Filter -->
+                <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                    <div class="relative flex-grow sm:w-64">
+                        <i class="fa-solid fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                        <input type="text" id="substance-search" placeholder="ค้นหาชื่อยา, ชื่อเรียกในวงการ..." 
+                            class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition">
+                    </div>
+
+                    <select id="danger-filter" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500 transition">
+                        <option value="all">ทุกระดับความอันตราย</option>
+                        <option value="extreme">อันตรายสูงสุด / เสียชีวิตเฉียบพลัน</option>
+                        <option value="high">อันตรายรุนแรง / เสพติดสูง</option>
+                        <option value="moderate">อันตรายสะสม / ทำลายอวัยวะระยะยาว</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="flex flex-wrap gap-2" id="category-tabs">
+                <button onclick="filterCategory('all', this)" class="cat-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-amber-500 text-slate-950 transition">
+                    ทั้งหมด (12)
+                </button>
+                <button onclick="filterCategory('stimulant', this)" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/50 transition">
+                    <i class="fa-solid fa-bolt text-amber-400 mr-1"></i> กระตุ้นประสาท
+                </button>
+                <button onclick="filterCategory('depressant', this)" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/50 transition">
+                    <i class="fa-solid fa-bed text-sky-400 mr-1"></i> กดประสาท
+                </button>
+                <button onclick="filterCategory('hallucinogen', this)" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/50 transition">
+                    <i class="fa-solid fa-eye text-purple-400 mr-1"></i> หลอนประสาท
+                </button>
+                <button onclick="filterCategory('mixed', this)" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/50 transition">
+                    <i class="fa-solid fa-shuffle text-rose-400 mr-1"></i> ออกฤทธิ์ผสมผสาน
+                </button>
+                <button onclick="filterCategory('novel', this)" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/50 transition">
+                    <i class="fa-solid fa-flask-vial text-emerald-400 mr-1"></i> สารระเหย / ยาเสพติดรูปแบบใหม่
+                </button>
+            </div>
+
+            <!-- Substances Grid -->
+            <div id="substances-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards rendered by JS -->
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- SECTION 2: INTERACTIVE SYNAPSE & NEUROTRANSMITTER SIMULATOR           -->
+        <!-- ===================================================================== -->
+        <section id="brain-sim" class="glass-panel rounded-3xl p-6 sm:p-10 space-y-8 scroll-mt-24">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+                <div class="space-y-1">
+                    <span class="text-xs font-mono uppercase tracking-widest text-rose-400 font-semibold">02 / NEUROBIOLOGY SIMULATOR</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white">แบบจำลองการทำงานของสมองและสารสื่อประสาท</h2>
+                    <p class="text-slate-400 text-sm">เลือกสภาวะด้านล่างเพื่อสังเกตการส่งสัญญาณบริเวณช่องว่างไซแนปส์ (Synaptic Cleft) และระดับสารเคมีในสมอง</p>
+                </div>
+            </div>
+
+            <!-- 5 Interactive State Buttons -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+                <button onclick="setBrainState('normal')" id="sim-btn-normal" class="sim-state-btn p-3 rounded-xl border border-emerald-500 bg-emerald-500/15 text-emerald-300 text-left transition">
+                    <div class="text-xs font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> 1. สภาวะปกติ</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">สมดุลสารสื่อประสาท</div>
+                </button>
+                <button onclick="setBrainState('meth')" id="sim-btn-meth" class="sim-state-btn p-3 rounded-xl border border-slate-800 bg-slate-900/90 text-slate-300 hover:border-rose-500/50 text-left transition">
+                    <div class="text-xs font-bold flex items-center gap-1.5"><i class="fa-solid fa-bolt text-rose-400"></i> 2. ยาบ้า / ไอซ์</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">Dopamine ทะลัก & ไหม้</div>
+                </button>
+                <button onclick="setBrainState('opioid')" id="sim-btn-opioid" class="sim-state-btn p-3 rounded-xl border border-slate-800 bg-slate-900/90 text-slate-300 hover:border-sky-500/50 text-left transition">
+                    <div class="text-xs font-bold flex items-center gap-1.5"><i class="fa-solid fa-lungs text-sky-400"></i> 3. เฮโรอีน / มอร์ฟีน</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">กดศูนย์ควบคุมหายใจ</div>
+                </button>
+                <button onclick="setBrainState('psychedelic')" id="sim-btn-psychedelic" class="sim-state-btn p-3 rounded-xl border border-slate-800 bg-slate-900/90 text-slate-300 hover:border-purple-500/50 text-left transition">
+                    <div class="text-xs font-bold flex items-center gap-1.5"><i class="fa-solid fa-eye text-purple-400"></i> 4. LSD / เคตามีน</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">รบกวนการรับรู้ภาพ-เสียง</div>
+                </button>
+                <button onclick="setBrainState('withdrawal')" id="sim-btn-withdrawal" class="sim-state-btn p-3 rounded-xl border border-slate-800 bg-slate-900/90 text-slate-300 hover:border-amber-500/50 text-left transition col-span-2 sm:col-span-1">
+                    <div class="text-xs font-bold flex items-center gap-1.5"><i class="fa-solid fa-battery-empty text-amber-400"></i> 5. สภาวะลงแดง</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">สมองขาดสารเคมีรุนแรง</div>
+                </button>
+            </div>
+
+            <!-- Canvas & Dynamic Neurotransmitter Bar Chart -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                <!-- Left: HTML5 Synapse Canvas -->
+                <div class="lg:col-span-7 relative rounded-2xl bg-slate-950 border border-slate-800 overflow-hidden min-h-[340px] flex flex-col">
+                    <div class="px-4 py-2.5 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between text-xs">
+                        <span id="canvas-status-badge" class="font-mono text-emerald-400 font-semibold">● NORMAL SYNAPTIC TRANSMISSION</span>
+                        <span class="text-slate-500 font-mono hidden sm:inline">Pre-synaptic ➔ Synaptic Cleft ➔ Post-synaptic</span>
+                    </div>
+                    <div class="relative flex-grow w-full h-[300px]">
+                        <canvas id="brain-canvas" class="w-full h-full block"></canvas>
+                    </div>
+                </div>
+
+                <!-- Right: Real-time Neurotransmitter Bar Chart & Explanation -->
+                <div class="lg:col-span-5 flex flex-col justify-between gap-4">
+                    <!-- Dynamic Bar Chart -->
+                    <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-sm text-white">ระดับสารสื่อประสาทในสมอง (Real-time Levels)</h3>
+                            <span class="text-[11px] font-mono text-slate-400">% เทียบค่าปกติ</span>
+                        </div>
+
+                        <div class="space-y-3 text-xs">
+                            <!-- Dopamine -->
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-300 font-medium">Dopamine (ความสุข / แรงจูงใจ)</span>
+                                    <span id="val-dopamine" class="font-mono font-bold text-amber-400">100%</span>
+                                </div>
+                                <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden">
+                                    <div id="bar-dopamine" class="h-full bg-amber-400 transition-all duration-500" style="width: 35%"></div>
+                                </div>
+                            </div>
+                            <!-- Serotonin -->
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-300 font-medium">Serotonin (อารมณ์ / การรับรู้)</span>
+                                    <span id="val-serotonin" class="font-mono font-bold text-purple-400">100%</span>
+                                </div>
+                                <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden">
+                                    <div id="bar-serotonin" class="h-full bg-purple-400 transition-all duration-500" style="width: 35%"></div>
+                                </div>
+                            </div>
+                            <!-- GABA -->
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-300 font-medium">GABA (ยับยั้งประสาท / ผ่อนคลาย)</span>
+                                    <span id="val-gaba" class="font-mono font-bold text-sky-400">100%</span>
+                                </div>
+                                <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden">
+                                    <div id="bar-gaba" class="h-full bg-sky-400 transition-all duration-500" style="width: 35%"></div>
+                                </div>
+                            </div>
+                            <!-- Glutamate -->
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-300 font-medium">Glutamate (กระตุ้นสมอง / ความจำ)</span>
+                                    <span id="val-glutamate" class="font-mono font-bold text-emerald-400">100%</span>
+                                </div>
+                                <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden">
+                                    <div id="bar-glutamate" class="h-full bg-emerald-400 transition-all duration-500" style="width: 35%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mechanism Explanation Card -->
+                    <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2 flex-grow">
+                        <h4 id="sim-exp-title" class="font-bold text-base text-emerald-400">สภาวะสมดุลของสมอง (Healthy Brain)</h4>
+                        <p id="sim-exp-body" class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                            เซลล์ประสาทต้นทางปล่อยสารสื่อประสาทในปริมาณพอเหมาะเพื่อจับกับตัวรับ (Receptors) และมีระบบดูดกลับ (Reuptake Transporter) ทำงานอย่างมีประสิทธิภาพ ทำให้สมองเรียนรู้และมีความสุขตามธรรมชาติได้
+                        </p>
+                        <div id="sim-exp-clinical" class="pt-2 border-t border-slate-800 text-xs text-amber-300/90 font-medium">
+                            <i class="fa-solid fa-stethoscope mr-1"></i> อาการทางคลินิก: สมาธิดี ควบคุมอารมณ์ได้ ระบบหายใจและหัวใจทำงานปกติ
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- SECTION 3: INTERACTIVE HUMAN BODY IMPACT EXPLORER                     -->
+        <!-- ===================================================================== -->
+        <section id="body-impact" class="space-y-8 scroll-mt-24">
+            <div class="space-y-1.5 border-b border-slate-800 pb-6">
+                <span class="text-xs font-mono uppercase tracking-widest text-emerald-400 font-semibold">03 / SYSTEMIC TOXICITY EXPLORER</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white">แผนภาพผลกระทบต่ออวัยวะในร่างกายแบบโต้ตอบ</h2>
+                <p class="text-slate-400 text-sm">คลิกเลือกจุดอวัยวะบนแผนภาพร่างกายหรือปุ่มระบบอวัยวะ เพื่อดูความเสียหายระดับเซลล์และอาการแทรกซ้อน</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Left: Interactive SVG Human Silhouette -->
+                <div class="lg:col-span-5 glass-panel rounded-3xl p-6 flex flex-col items-center justify-center relative">
+                    <div class="text-xs font-mono text-slate-400 mb-2">คลิกที่จุดเรืองแสงบนร่างกายเพื่อสำรวจ</div>
+                    <svg viewBox="0 0 260 440" class="w-full max-w-[260px] h-auto select-none">
+                        <!-- Silhouette Path -->
+                        <path d="M130,22 C148,22 162,36 162,55 C162,72 150,84 142,88 L145,102 C175,108 198,125 204,158 L216,238 C218,248 206,252 202,242 L186,168 L180,235 L186,405 C186,416 170,416 168,405 L154,275 L130,275 L106,275 L92,405 C90,416 74,416 74,405 L80,235 L74,168 L58,242 C54,252 42,248 44,238 L56,158 C62,125 85,108 115,102 L118,88 C110,84 98,72 98,55 C98,36 112,22 130,22 Z" 
+                            fill="#1e293b" stroke="#334155" stroke-width="2.5"/>
+
+                        <!-- Organ 1: Brain & Nervous System -->
+                        <g onclick="selectOrgan('brain')" id="node-brain" class="organ-node organ-active">
+                            <circle class="organ-ring" cx="130" cy="48" r="18" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.35"/>
+                            <circle class="organ-core" cx="130" cy="48" r="9" fill="#38bdf8"/>
+                            <text x="155" y="45" fill="#cbd5e1" font-size="11" font-family="Prompt">สมอง</text>
+                        </g>
+
+                        <!-- Organ 2: Lungs & Respiratory -->
+                        <g onclick="selectOrgan('lungs')" id="node-lungs" class="organ-node">
+                            <circle class="organ-ring" cx="110" cy="142" r="18" fill="none" stroke="#34d399" stroke-width="2" opacity="0.35"/>
+                            <circle class="organ-core" cx="110" cy="142" r="9" fill="#34d399"/>
+                            <text x="48" y="138" fill="#cbd5e1" font-size="11" font-family="Prompt">ปอด</text>
+                        </g>
+
+                        <!-- Organ 3: Heart & Cardiovascular -->
+                        <g onclick="selectOrgan('heart')" id="node-heart" class="organ-node">
+                            <circle class="organ-ring" cx="144" cy="152" r="18" fill="none" stroke="#f43f5e" stroke-width="2" opacity="0.35"/>
+                            <circle class="organ-core" cx="144" cy="152" r="9" fill="#f43f5e"/>
+                            <text x="168" y="155" fill="#cbd5e1" font-size="11" font-family="Prompt">หัวใจ</text>
+                        </g>
+
+                        <!-- Organ 4: Liver & Kidneys -->
+                        <g onclick="selectOrgan('liver')" id="node-liver" class="organ-node">
+                            <circle class="organ-ring" cx="122" cy="195" r="18" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.35"/>
+                            <circle class="organ-core" cx="122" cy="195" r="9" fill="#a855f7"/>
+                            <text x="52" y="198" fill="#cbd5e1" font-size="11" font-family="Prompt">ตับและไต</text>
+                        </g>
+
+                        <!-- Organ 5: Skin, Teeth & Reproductive -->
+                        <g onclick="selectOrgan('systemic')" id="node-systemic" class="organ-node">
+                            <circle class="organ-ring" cx="130" cy="248" r="18" fill="none" stroke="#fb923c" stroke-width="2" opacity="0.35"/>
+                            <circle class="organ-core" cx="130" cy="248" r="9" fill="#fb923c"/>
+                            <text x="155" y="252" fill="#cbd5e1" font-size="11" font-family="Prompt">ผิวหนัง/สืบพันธุ์</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Right: Organ Detailed Panel -->
+                <div class="lg:col-span-7 space-y-5">
+                    <!-- Organ Selector Pills -->
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="selectOrgan('brain')" id="pill-brain" class="organ-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">
+                            1. สมองและระบบประสาท
+                        </button>
+                        <button onclick="selectOrgan('heart')" id="pill-heart" class="organ-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/50 transition">
+                            2. หัวใจและหลอดเลือด
+                        </button>
+                        <button onclick="selectOrgan('lungs')" id="pill-lungs" class="organ-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/50 transition">
+                            3. ปอดและทางเดินหายใจ
+                        </button>
+                        <button onclick="selectOrgan('liver')" id="pill-liver" class="organ-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/50 transition">
+                            4. ตับ ไต และกระเพาะปัสสาวะ
+                        </button>
+                        <button onclick="selectOrgan('systemic')" id="pill-systemic" class="organ-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/50 transition">
+                            5. ระบบสืบพันธุ์ ฟัน และผิวหนัง
+                        </button>
+                    </div>
+
+                    <!-- Organ Info Box -->
+                    <div id="organ-detail-card" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+                        <!-- Injected dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- SECTION 4: INTERACTIVE 8-QUESTION QUIZ & DIGITAL CERTIFICATE          -->
+        <!-- ===================================================================== -->
+        <section id="quiz-section" class="space-y-8 scroll-mt-24">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="text-xs font-mono uppercase tracking-widest text-amber-400 font-semibold">04 / INTERACTIVE ASSESSMENT & CERTIFICATE</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white">แบบทดสอบประเมินความรู้ (8 ข้อ)</h2>
+                <p class="text-slate-400 text-sm">ทดสอบความเข้าใจเรื่องกลไกสมอง กฎหมายไทย การปฐมพยาบาล และรับเกียรติบัตรดิจิทัลหลังทำเสร็จ</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto glass-panel rounded-3xl p-6 sm:p-10 shadow-2xl">
+                <!-- Quiz Header -->
+                <div id="quiz-header" class="space-y-4 mb-6">
+                    <div class="flex justify-between items-center text-xs font-mono">
+                        <span class="text-slate-300">คำถามข้อที่ <strong id="q-index" class="text-amber-400 text-sm">1</strong> / 8</span>
+                        <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-emerald-400 font-bold">
+                            คะแนน: <span id="q-score">0</span> / 8
+                        </span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                        <div id="q-progress" class="h-full bg-gradient-to-r from-amber-500 to-rose-500 transition-all duration-300" style="width: 12.5%"></div>
+                    </div>
+                </div>
+
+                <!-- Quiz Body -->
+                <div id="quiz-body" class="space-y-6">
+                    <div class="space-y-2">
+                        <span id="q-topic-tag" class="inline-block text-[11px] font-mono px-2.5 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                            หมวด: กลไกสมอง
+                        </span>
+                        <h3 id="q-text" class="text-lg sm:text-xl font-bold text-white leading-snug">
+                            กำลังโหลดคำถาม...
+                        </h3>
+                    </div>
+
+                    <div id="q-options" class="space-y-3">
+                        <!-- Options injected via JS -->
+                    </div>
+
+                    <!-- Detailed Explanation Box -->
+                    <div id="q-explanation" class="hidden p-4 rounded-2xl border text-xs sm:text-sm leading-relaxed">
+                    </div>
+
+                    <div class="flex justify-end pt-2">
+                        <button id="q-next-btn" onclick="handleNextQuestion()" class="hidden px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-heading font-bold text-sm transition flex items-center gap-2">
+                            <span>ข้อถัดไป</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Result & Certificate Generator (Hidden until complete) -->
+                <div id="quiz-result-panel" class="hidden space-y-6 text-center">
+                    <div class="space-y-2">
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center text-3xl">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">สรุปผลการประเมินความรู้</h3>
+                        <p class="text-3xl font-extrabold text-amber-400 font-heading">
+                            ได้คะแนน <span id="final-score-num">0</span> / 8 คะแนน (<span id="final-percent">0</span>%)
+                        </p>
+                        <p id="final-feedback-text" class="text-sm text-slate-300 max-w-lg mx-auto"></p>
+                    </div>
+
+                    <!-- Name Input for Digital Certificate -->
+                    <div class="max-w-md mx-auto p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+                        <label for="cert-name-input" class="block text-xs font-semibold text-slate-300">
+                            พิมพ์ชื่อ-นามสกุลของคุณเพื่อออกเกียรติบัตรดิจิทัลจำลอง:
+                        </label>
+                        <div class="flex gap-2">
+                            <input type="text" id="cert-name-input" placeholder="เช่น นายรักเรียน เพียรศึกษา" 
+                                class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-amber-500">
+                            <button onclick="updateCertificateName()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
+                                ออกบัตร
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Digital Certificate Card -->
+                    <div id="digital-certificate" class="relative p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 border-2 border-amber-500/60 shadow-2xl max-w-xl mx-auto text-center space-y-4 overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-amber-400 via-rose-500 to-emerald-400"></div>
+                        <div class="flex justify-center items-center gap-2 text-amber-400 text-xs font-mono tracking-widest uppercase">
+                            <i class="fa-solid fa-shield-halved"></i> CERTIFICATE OF AWARENESS
+                        </div>
+                        <h4 class="font-heading text-xl sm:text-2xl font-extrabold text-white">เกียรติบัตรผ่านการเรียนรู้และประเมินผล</h4>
+                        <p class="text-xs text-slate-400">ขอมอบเกียรติบัตรฉบับนี้ให้ไว้เพื่อแสดงว่า</p>
+                        <div id="cert-display-name" class="font-heading text-xl sm:text-2xl font-bold text-amber-400 border-b border-slate-700 pb-2 max-w-sm mx-auto">
+                            ผู้ผ่านการทดสอบความรู้
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed max-w-md mx-auto">
+                            ได้ผ่านการอบรมและแบบทดสอบความรู้เชิงลึกเรื่องกลไกทำลายสมอง โทษตามประมวลกฎหมายยาเสพติด และการปฐมพยาบาลเบื้องต้น ด้วยคะแนน <strong id="cert-score-tag" class="text-emerald-400">0/8</strong>
+                        </p>
+                        <div class="pt-3 flex justify-between items-center text-[11px] text-slate-500 font-mono border-t border-slate-800/80">
+                            <span>ศูนย์เรียนรู้และป้องกันภัยสารเสพติด</span>
+                            <span id="cert-date">วันที่ออกบัตร: -</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button onclick="restartQuiz()" class="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> ทำแบบทดสอบใหม่อีกครั้ง
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- SECTION 5: DETECTION CHECKLIST, FIRST AID & THAI HELPLINES            -->
+        <!-- ===================================================================== -->
+        <section id="first-aid" class="space-y-10 scroll-mt-24">
+            <div class="space-y-1.5 border-b border-slate-800 pb-6">
+                <span class="text-xs font-mono uppercase tracking-widest text-rose-400 font-semibold">05 / DETECTION, FIRST AID & EMERGENCY HELPLINES</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white">การสังเกตอาการ การปฐมพยาบาลผู้เสพเกินขนาด และสายด่วนไทย</h2>
+                <p class="text-slate-400 text-sm">เครื่องมือคัดกรองสัญญาณเตือนเบื้องต้น ขั้นตอนช่วยชีวิตฉุกเฉิน และช่องทางติดต่อหน่วยงานภาครัฐ</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Left: Interactive Behavioral & Physical Warning Checklist -->
+                <div class="glass-panel rounded-3xl p-6 sm:p-8 space-y-5">
+                    <div class="flex items-center justify-between gap-2">
+                        <div>
+                            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-clipboard-check text-amber-400"></i> เช็กลิสต์สังเกตสัญญาณเตือนเบื้องต้น
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-0.5">ติ๊กเลือกรายการที่พบเห็นในคนใกล้ชิดเพื่อประเมินความเสี่ยงเบื้องต้น</p>
+                        </div>
+                        <span id="checklist-counter" class="px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-xs font-mono text-amber-400 font-bold">
+                            พบ 0 / 8 ข้อ
+                        </span>
+                    </div>
+
+                    <div class="space-y-2.5 text-xs sm:text-sm" id="warning-checklist">
+                        <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
+                            <input type="checkbox" onchange="updateChecklist()" class="warn-chk mt-1 accent-amber-500 w-4 h-4">
+                            <span class="text-slate-200"><strong>การนอนและเวลาผิดเพี้ยน:</strong> นอนไม่หลับติดต่อกัน 2-3 วัน หรือหลับยาวผิดปกติในเวลากลางวัน</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
+                            <input type="checkbox" onchange="updateChecklist()" class="warn-chk mt-1 accent-amber-500 w-4 h-4">
+                            <span class="text-slate-200"><strong>ความเปลี่ยนแปลงทางดวงตา:</strong> รูม่านตาขยายกว้างผิดปกติ (กลุ่มกระตุ้น) หรือหดเล็กเท่ารูเข็ม (กลุ่มฝิ่น/เฮโรอีน) ตาแดงก่ำ</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
+                            <input type="checkbox" onchange="updateChecklist()" class="warn-chk mt-1 accent-amber-500 w-4 h-4">
+                            <span class="text-slate-200"><strong>อารมณ์แปรปรวนและหวาดระแวง:</strong> หงุดหงิดฉุนเฉียวง่าย ก้าวร้าว หรือระแวงว่ามีคนคอยติดตามทำร้าย</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
+                            <input type="checkbox" onchange="updateChecklist()" class="warn-chk mt-1 accent-amber-500 w-4 h-4">
+                            <span class="text-slate-200"><strong>น้ำหนักลดฮวบและสุขอนามัยแย่ลง:</strong> เบื่ออาหาร ผอมซูบอย่างรวดเร็ว ไม่ดูแลความสะอาดร่างกาย</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
+                            <input type="checkbox" onchange="updateChecklist()" class="warn-chk mt-1 accent-amber-500 w-4 h-4">
+                            <span class="text-slate-200"><strong>พฤติกรรมแยกตัวและลับลมคมใน:</strong> เก็บตัวเงียบในห้อง ล็อกประตูตลอดเวลา ใส่เสื้อแขนยาวตลอดเพื่อปิดรอยเข็ม</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
+                            <input type="checkbox" onchange="updateChecklist()" class="warn-chk mt-1 accent-amber-500 w-4 h-4">
+                            <span class="text-slate-200"><strong>ปัญหาการเงินและของมีค่าหาย:</strong> ขอเงินบ่อยผิดปกติ โกหกเก่ง หรือสิ่งของในบ้านสูญหาย</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
+                            <input type="checkbox" onchange="updateChecklist()" class="warn-chk mt-1 accent-amber-500 w-4 h-4">
+                            <span class="text-slate-200"><strong>พบอุปกรณ์ต้องสงสัย:</strong> ฟอยล์อะลูมิเนียม หลอดกาแฟตัดสั้น ไฟแช็กดัดแปลง ขวดน้ำเจาะรู หรือซองซิปขนาดเล็ก</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
+                            <input type="checkbox" onchange="updateChecklist()" class="warn-chk mt-1 accent-amber-500 w-4 h-4">
+                            <span class="text-slate-200"><strong>ผลการเรียนหรือการทำงานตกต่ำ:</strong> ขาดเรียน ขาดงานบ่อย ขาดความรับผิดชอบอย่างกะทันหัน</span>
+                        </label>
+                    </div>
+
+                    <!-- Dynamic Risk Advice Box -->
+                    <div id="checklist-advice" class="p-4 rounded-2xl bg-slate-900 border border-slate-800 text-xs text-slate-300 leading-relaxed">
+                        <strong class="text-emerald-400">คำแนะนำ:</strong> ติ๊กเลือกพฤติกรรมที่สังเกตเห็นด้านบนเพื่อรับแนวทางการพูดคุยและปรึกษาผู้เชี่ยวชาญ
+                    </div>
+                </div>
+
+                <!-- Right: Overdose First Aid Protocol -->
+                <div class="glass-panel rounded-3xl p-6 sm:p-8 space-y-5 border border-rose-500/25">
+                    <div>
+                        <span class="text-[11px] font-mono text-rose-400 font-bold uppercase tracking-wider">EMERGENCY OVERDOSE PROTOCOL</span>
+                        <h3 class="text-lg font-bold text-white mt-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-kit-medical text-rose-500"></i> ขั้นตอนปฐมพยาบาลเมื่อพบผู้เสพเกินขนาด (Overdose)
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-1">การช่วยเหลืออย่างถูกวิธีใน 5 นาทีแรก สามารถลดโอกาสเสียชีวิตและสมองตายได้</p>
+                    </div>
+
+                    <div class="space-y-3 text-xs sm:text-sm">
+                        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex gap-3.5">
+                            <div class="w-7 h-7 rounded-lg bg-rose-500/20 text-rose-400 font-bold flex items-center justify-center shrink-0">1</div>
+                            <div>
+                                <h4 class="font-bold text-white">ประเมินความปลอดภัยและโทร 1669 ทันที</h4>
+                                <p class="text-slate-400 text-xs mt-0.5">ตรวจสอบสภาพแวดล้อม ปลุกเรียกผู้ป่วยด้วยการตบไหล่ หากไม่ตอบสนอง หายใจเฮือก หรือตัวเขียวคล้ำ ให้โทรเรียกรถพยาบาล 1669 ทันที</p>
+                            </div>
+                        </div>
+
+                        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex gap-3.5">
+                            <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center shrink-0">2</div>
+                            <div>
+                                <h4 class="font-bold text-white">จัดท่าพักฟื้น (Recovery Position) ป้องกันสำลัก</h4>
+                                <p class="text-slate-400 text-xs mt-0.5">หากผู้ป่วยยังหายใจอยู่แต่หมดสติ ให้จับนอนตะแคงกึ่งคว่ำ เชยคางขึ้นเล็กน้อยเพื่อเปิดทางเดินหายใจและป้องกันการสำลักอาเจียน</p>
+                            </div>
+                        </div>
+
+                        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex gap-3.5">
+                            <div class="w-7 h-7 rounded-lg bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center shrink-0">3</div>
+                            <div>
+                                <h4 class="font-bold text-white">คลายเสื้อผ้าและระบายความร้อน (กรณีกลุ่มกระตุ้น)</h4>
+                                <p class="text-slate-400 text-xs mt-0.5">ปลดกระดุมเสื้อให้หลวม หากตัวร้อนจัด (เช่น ยาบ้า/ยาอี) ให้ใช้ผ้าชุบน้ำเช็ดตามซอกคอ รักแร้ ข้อพับ เพื่อลดภาวะ Heatstroke</p>
+                            </div>
+                        </div>
+
+                        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex gap-3.5">
+                            <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center shrink-0">4</div>
+                            <div>
+                                <h4 class="font-bold text-white">ทำ CPR ทันทีหากหยุดหายใจหรือไม่มีชีพจร</h4>
+                                <p class="text-slate-400 text-xs mt-0.5">กดหน้าอกกึ่งกลางระหว่างหัวนม ลึกอย่างน้อย 2 นิ้ว ความเร็ว 100-120 ครั้ง/นาที ต่อเนื่องจนกว่าทีมกู้ชีพ 1669 จะมาถึง</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DO NOT Box -->
+                    <div class="p-4 rounded-2xl bg-rose-950/40 border border-rose-500/30 text-xs space-y-1.5">
+                        <div class="font-bold text-rose-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-ban"></i> สิ่งที่ห้ามทำโดยเด็ดขาด!
+                        </div>
+                        <ul class="text-slate-300 space-y-1 list-disc list-inside">
+                            <li><strong>ห้าม</strong> กรอกน้ำ นม หรืออาหารใส่ปากผู้ที่หมดสติ เพราะจะสำลักลงปอด</li>
+                            <li><strong>ห้าม</strong> จับแช่น้ำแข็งทั้งตัว เพราะอาจทำให้หลอดเลือดหดตัวฉับพลันและหัวใจหยุดเต้น</li>
+                            <li><strong>ห้าม</strong> ทิ้งผู้ป่วยไว้ตามลำพัง และควรแจ้งข้อมูลสารที่เสพแก่แพทย์ตามจริงเพื่อการรักษาที่ตรงจุด</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 Official Thai Helplines Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- 1165 -->
+                <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-amber-500 flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-mono text-amber-400 font-bold">ปรึกษาบำบัดยาเสพติด</span>
+                            <i class="fa-solid fa-heart-pulse text-amber-400"></i>
+                        </div>
+                        <div class="font-heading text-3xl font-extrabold text-white">1165</div>
+                        <h4 class="font-bold text-sm text-slate-200">สายด่วนยาเสพติด (สบยช.)</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">สถาบันบำบัดรักษาและฟื้นฟูผู้ติดยาเสพติดแห่งชาติบรมราชชนนี ให้คำปรึกษาการเลิกยาและส่งต่อสถานพยาบาลฟรี 24 ชม.</p>
+                    </div>
+                    <a href="tel:1165" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-heading font-bold text-xs text-center transition">
+                        <i class="fa-solid fa-phone mr-1"></i> โทรด่วน 1165
+                    </a>
+                </div>
+
+                <!-- 1323 -->
+                <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-emerald-500 flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-mono text-emerald-400 font-bold">ปรึกษาสุขภาพจิต</span>
+                            <i class="fa-solid fa-brain text-emerald-400"></i>
+                        </div>
+                        <div class="font-heading text-3xl font-extrabold text-white">1323</div>
+                        <h4 class="font-bold text-sm text-slate-200">สายด่วนสุขภาพจิต (กรมสุขภาพจิต)</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">ให้คำปรึกษาภาวะซึมเศร้า ความเครียด อาการทางจิตเวชจากการใช้สารเสพติด และแนวทางดูแลคนในครอบครัว</p>
+                    </div>
+                    <a href="tel:1323" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-heading font-bold text-xs text-center transition">
+                        <i class="fa-solid fa-phone mr-1"></i> โทรด่วน 1323
+                    </a>
+                </div>
+
+                <!-- 1386 -->
+                <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-sky-500 flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-mono text-sky-400 font-bold">แจ้งเบาะแสยาเสพติด</span>
+                            <i class="fa-solid fa-shield-halved text-sky-400"></i>
+                        </div>
+                        <div class="font-heading text-3xl font-extrabold text-white">1386</div>
+                        <h4 class="font-bold text-sm text-slate-200">ศูนย์แจ้งเบาะแส ป.ป.ส.</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">สำนักงานคณะกรรมการป้องกันและปราบปรามยาเสพติด แจ้งเบาะแสแหล่งค้ายาเสพติด ข้อมูลผู้แจ้งถูกเก็บเป็นความลับ</p>
+                    </div>
+                    <a href="tel:1386" class="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-heading font-bold text-xs text-center transition">
+                        <i class="fa-solid fa-phone mr-1"></i> โทรด่วน 1386
+                    </a>
+                </div>
+
+                <!-- 1669 -->
+                <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-rose-500 flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-mono text-rose-400 font-bold">เจ็บป่วยฉุกเฉิน / Overdose</span>
+                            <i class="fa-solid fa-truck-medical text-rose-400"></i>
+                        </div>
+                        <div class="font-heading text-3xl font-extrabold text-white">1669</div>
+                        <h4 class="font-bold text-sm text-slate-200">สถาบันการแพทย์ฉุกเฉินแห่งชาติ</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">เรียกรถพยาบาลฉุกเฉินเมื่อพบผู้เสพเกินขนาด หมดสติ ชัก หรือคลุ้มคลั่งทำร้ายตนเองและผู้อื่น ฟรีทั่วประเทศ</p>
+                    </div>
+                    <a href="tel:1669" class="w-full py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-heading font-bold text-xs text-center transition">
+                        <i class="fa-solid fa-phone mr-1"></i> โทรด่วน 1669
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- SUBSTANCE DEEP-DIVE MODAL WITH 4 TABS                                 -->
+    <!-- ===================================================================== -->
+    <div id="substance-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-4" onclick="closeModalOnBackdrop(event)">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-3xl w-full p-6 sm:p-8 relative shadow-2xl space-y-6 max-h-[92vh] overflow-y-auto">
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-5 right-5 w-9 h-9 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="space-y-2 pr-10">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span id="m-cat-badge" class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                        ประเภท
+                    </span>
+                    <span id="m-danger-badge" class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-rose-500/15 text-rose-400 border border-rose-500/30">
+                        ระดับอันตราย
+                    </span>
+                </div>
+                <h3 id="m-title" class="text-2xl sm:text-3xl font-bold text-white">ชื่อสารเสพติด</h3>
+                <p id="m-street" class="text-xs text-slate-400 font-mono">ชื่อเรียกในวงการ: -</p>
+            </div>
+
+            <!-- 4 Interactive Modal Tabs -->
+            <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-3" id="modal-tabs">
+                <button onclick="switchModalTab('brain', this)" class="m-tab-btn active px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">
+                    1. กลไกออกฤทธิ์ต่อสมอง
+                </button>
+                <button onclick="switchModalTab('effects', this)" class="m-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                    2. อาการระยะสั้น vs ระยะยาว
+                </button>
+                <button onclick="switchModalTab('withdrawal', this)" class="m-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                    3. อาการถอนยา (Withdrawal)
+                </button>
+                <button onclick="switchModalTab('law', this)" class="m-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                    4. โทษตามกฎหมายไทย
+                </button>
+            </div>
+
+            <!-- Modal Tab Content Area -->
+            <div id="modal-tab-content" class="min-h-[200px] text-sm text-slate-200 leading-relaxed">
+                <!-- Populated dynamically -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="pt-2 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-400">
+                <span>ต้องการคำปรึกษาการเลิกสารเสพติด โทร <strong class="text-amber-400">1165</strong> ฟรีตลอด 24 ชม.</span>
+                <button onclick="closeModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold transition">
+                    ปิดหน้าต่าง
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+            <div class="text-center md:text-left space-y-1">
+                <p class="font-heading font-bold text-slate-300 text-sm">ศูนย์เรียนรู้และป้องกันภัยสารเสพติด (Substance Abuse Awareness & Prevention Hub)</p>
+                <p>สื่อการเรียนรู้เชิงโต้ตอบเพื่อการป้องกันยาเสพติดในสถานศึกษาและชุมชน อ้างอิงข้อมูลทางการแพทย์และประมวลกฎหมายยาเสพติด พ.ศ. 2564</p>
+            </div>
+            <div class="flex items-center gap-4 font-mono">
+                <a href="tel:1165" class="text-amber-400 hover:underline">สบยช. 1165</a>
+                <span>•</span>
+                <a href="tel:1323" class="text-emerald-400 hover:underline">สุขภาพจิต 1323</a>
+                <span>•</span>
+                <a href="tel:1669" class="text-rose-400 hover:underline">ฉุกเฉิน 1669</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- JAVASCRIPT APPLICATION LOGIC                                          -->
+    <!-- ===================================================================== -->
+    <script>
+        // ---------------------------------------------------------------------
+        // 1. DATABASE: 12 COMPREHENSIVE SUBSTANCES + THAI LEGAL PENALTIES
+        // ---------------------------------------------------------------------
+        const substanceDB = [
+            {
+                id: 'meth-pill',
+                name: 'ยาบ้า (Methamphetamine Tablets)',
+                streetNames: 'ยาขยัน, ม้า, เม็ดส้ม, ขนม',
+                category: 'stimulant',
+                categoryLabel: 'กระตุ้นประสาท',
+                dangerLevel: 'extreme',
+                dangerLabel: 'อันตรายสูงสุด / เสพติดรุนแรง',
+                summary: 'สารสังเคราะห์กลุ่มแอมเฟตามีน ออกฤทธิ์กระตุ้นระบบประสาทส่วนกลางอย่างรุนแรง ทำลายเซลล์สมองและก่ออาการจิตเวช',
+                brainMechanism: 'กระตุ้นให้เซลล์ประสาทหลั่งสารโดพามีน (Dopamine) และนอร์เอพิเนฟรินออกมามากกว่าปกติถึง 1,000% พร้อมยับยั้งการดูดกลับ ทำให้เกิดความตื่นตัวเทียมอย่างรุนแรงและทำลายตัวรับสารสื่อประสาทในสมองส่วนหน้า',
+                shortTerm: 'หัวใจเต้นเร็วแรง ความดันโลหิตพุ่งสูง เหงื่อออกมาก นอนไม่หลับติดต่อกันหลายวัน เบื่ออาหาร พูดมาก ก้าวร้าว',
+                longTerm: 'เซลล์สมองตายถาวร เกิดอาการประสาทหลอน หูแว่ว หวาดระแวง (Amphetamine Psychosis) เสี่ยงเส้นเลือดในสมองแตกและหัวใจวายเฉียบพลัน',
+                withdrawal: 'อ่อนเพลียหมดแรงอย่างหนัก (Crash) ซึมเศร้ารุนแรง อยากอาหารมาก นอนหลับยาวผิดปกติ วิตกกังวล และมีความคิดทำร้ายตนเอง',
+                thaiLaw: {
+                    schedule: 'ยาเสพติดให้โทษประเภท 1 (ตามประมวลกฎหมายยาเสพติด พ.ศ. 2564)',
+                    usePenalty: 'การเสพ: จำคุกไม่เกิน 1 ปี หรือปรับไม่เกิน 20,000 บาท หรือทั้งจำทั้งปรับ (ผู้สมัครใจเข้ารับการบำบัดจะได้รับการยกเว้นโทษ)',
+                    possessionPenalty: 'ครอบครองเพื่อเสพ (สันนิษฐานเบื้องต้นไม่เกิน 5 เม็ด): จำคุกไม่เกิน 2 ปี หรือปรับไม่เกิน 40,000 บาท / ครอบครองทั่วไป: จำคุก 1-10 ปี และปรับ 20,000-200,000 บาท',
+                    traffickingPenalty: 'จำหน่าย/ผลิต/นำเข้า: จำคุกตั้งแต่ 2 ปี ถึงตลอดชีวิต และปรับสูงสุด 5,000,000 บาท (หากกระทบความมั่นคงหรือขายให้เยาวชน โทษสูงสุดถึงประหารชีวิต)'
+                }
+            },
+            {
+                id: 'crystal-meth',
+                name: 'ยาไอซ์ (Crystal Methamphetamine)',
+                streetNames: 'น้ำแข็ง, เกล็ด, ไอซ์, Glass',
+                category: 'stimulant',
+                categoryLabel: 'กระตุ้นประสาท',
+                dangerLevel: 'extreme',
+                dangerLabel: 'อันตรายสูงสุด / บริสุทธิ์สูง',
+                summary: 'เมทแอมเฟตามีนรูปแบบผลึกใสที่มีความบริสุทธิ์สูงกว่ายาบ้าหลายเท่า ออกฤทธิ์เร็วและทำลายอวัยวะรุนแรงกว่า',
+                brainMechanism: 'ซึมผ่านเยื่อหุ้มสมองได้รวดเร็วมาก บังคับให้สมองหลั่งโดพามีนมหาศาลจนเกิดพิษต่อเซลล์ประสาท (Neurotoxicity) ทำลายเนื้อเยื่อสมองส่วนควบคุมอารมณ์และความจำอย่างถาวร',
+                shortTerm: 'รูม่านตาขยายกว้าง หัวใจเต้นผิดจังหวะ อุณหภูมิร่างกายสูงจัด กรามเกร็ง ตื่นตัวเกินเหตุ หวาดระแวงทันทีหลังหมดฤทธิ์',
+                longTerm: 'สมองฝ่อก่อนวัย ฟันผุกร่อนรุนแรง (Meth Mouth) ผิวหนังเป็นแผลพุพองจากการแกะเกาเพราะหลอนว่ามีแมลงไต่ตามตัว ไตวาย',
+                withdrawal: 'ภาวะซึมเศร้าขั้นวิกฤต ไร้เรี่ยวแรง หงุดหงิดรุนแรง นอนไม่หลับสลับหลับลึก ความอยากยาพุ่งสูงมากในช่วง 2 สัปดาห์แรก',
+                thaiLaw: {
+                    schedule: 'ยาเสพติดให้โทษประเภท 1',
+                    usePenalty: 'การเสพ: จำคุกไม่เกิน 1 ปี หรือปรับไม่เกิน 20,000 บาท หรือทั้งจำทั้งปรับ (สามารถขอรับการบำบัดรักษาเพื่อฟื้นฟูสภาพ)',
+                    possessionPenalty: 'ครอบครองเพื่อเสพ (ปริมาณสารบริสุทธิ์ไม่เกิน 100 มก.): จำคุกไม่เกิน 2 ปี หรือปรับไม่เกิน 40,000 บาท',
+                    traffickingPenalty: 'จำหน่าย/ครอบครองเพื่อค้า: จำคุก 2 ปี ถึงตลอดชีวิต ปรับสูงสุด 5,000,000 บาท หรือประหารชีวิตในกรณีร้ายแรง'
+                }
+            },
+            {
+                id: 'heroin',
+                name: 'เฮโรอีน (Heroin)',
+                streetNames: 'ผงขาว, เบอร์ 4, สแม็ค (Smack)',
+                category: 'depressant',
+                categoryLabel: 'กดประสาท',
+                dangerLevel: 'extreme',
+                dangerLabel: 'อันตรายสูงสุด / เสี่ยงหยุดหายใจ',
+                summary: 'สารสังเคราะห์จากมอร์ฟีนที่มีฤทธิ์กดระบบประสาทส่วนกลางรุนแรงที่สุด เสพติดทางกายภาพอย่างรวดเร็วและเสี่ยงเสียชีวิตจากการเสพเกินขนาด',
+                brainMechanism: 'เปลี่ยนรูปเป็นมอร์ฟีนในสมองและเข้าจับกับตัวรับ Mu-Opioid Receptors อย่างรวดเร็ว ระงับการส่งสัญญาณความเจ็บปวดและกดศูนย์ควบคุมการหายใจในก้านสมอง',
+                shortTerm: 'เคลิบเคลิ้ม ง่วงซึมลึก พูดอ้อแอ้ รูม่านตาหดเล็กเท่ารูเข็ม คลื่นไส้อาเจียน ความดันตก หายใจช้าลง',
+                longTerm: 'หลอดเลือดดำอุดตัน ลิ้นหัวใจอักเสบติดเชื้อ ปอดอักเสบ เสี่ยงติดเชื้อ HIV และไวรัสตับอักเสบจากการใช้เข็มร่วมกัน',
+                withdrawal: 'ปวดกระดูกและกล้ามเนื้ออย่างทรมาน เหงื่อแตก หนาวสั่น น้ำมูกน้ำตาไหล ท้องเสียรุนแรง อาเจียน (อาการลงแดงรุนแรง 48-72 ชม. แรก)',
+                thaiLaw: {
+                    schedule: 'ยาเสพติดให้โทษประเภท 1 (ร้ายแรงที่สุด)',
+                    usePenalty: 'การเสพ: จำคุกไม่เกิน 1 ปี หรือปรับไม่เกิน 20,000 บาท หรือทั้งจำทั้งปรับ',
+                    possessionPenalty: 'ครอบครองเพื่อเสพ (สารบริสุทธิ์ไม่เกิน 20 มก.): จำคุกไม่เกิน 2 ปี / เกินเกณฑ์ถือว่าครอบครองร้ายแรง โทษจำคุก 1-10 ปี',
+                    traffickingPenalty: 'ผลิต/นำเข้า/จำหน่าย: จำคุก 2 ปี ถึงตลอดชีวิต ปรับ 200,000 - 5,000,000 บาท หรือประหารชีวิต'
+                }
+            },
+            {
+                id: 'morphine-opium',
+                name: 'ฝิ่นและมอร์ฟีน (Opium & Morphine)',
+                streetNames: 'ยาฝิ่น, ยาดำ, มอร์ฟีนเถื่อน',
+                category: 'depressant',
+                categoryLabel: 'กดประสาท',
+                dangerLevel: 'high',
+                dangerLabel: 'อันตรายรุนแรง / เสพติดทางกาย',
+                summary: 'สารสกัดจากยางฝิ่น ใช้ทางการแพทย์เพื่อระงับปวดรุนแรง แต่หากนำมาใช้ผิดกฎหมายจะเกิดการดื้อยาและเสพติดรุนแรง',
+                brainMechanism: 'จับตัวรับโอปิออยด์ในสมองและไขสันหลัง ลดการหลั่งสารสื่อประสาทที่นำความเจ็บปวด และกดการทำงานของระบบประสาทอัตโนมัติ',
+                shortTerm: 'ซึมเซา ง่วงนอน ท้องผูกอย่างรุนแรง คลื่นไส้ ปัสสาวะลำบาก การตัดสินใจช้าลง',
+                longTerm: 'ร่างกายเกิดภาวะดื้อยาต้องเพิ่มขนาดขึ้นเรื่อยๆ ระบบทางเดินอาหารล้มเหลว ภูมิคุ้มกันต่ำ สมองเสื่อม',
+                withdrawal: 'กระสับกระส่าย ปวดเมื่อยตามตัวรุนแรง ตะคริวที่ท้อง หาวตลอดเวลา นอนไม่หลับ ความดันโลหิตสูงชั่วคราว',
+                thaiLaw: {
+                    schedule: 'ยาเสพติดให้โทษประเภท 2 (ใช้ประโยชน์ทางการแพทย์ภายใต้การควบคุมเข้มงวด)',
+                    usePenalty: 'เสพโดยไม่มีใบสั่งแพทย์: จำคุกไม่เกิน 6 เดือน หรือปรับไม่เกิน 10,000 บาท หรือทั้งจำทั้งปรับ',
+                    possessionPenalty: 'ครอบครองโดยไม่ได้รับอนุญาต: จำคุกไม่เกิน 5 ปี หรือปรับไม่เกิน 100,000 บาท หรือทั้งจำทั้งปรับ',
+                    traffickingPenalty: 'จำหน่ายโดยไม่ได้รับอนุญาต: จำคุก 1-15 ปี และปรับ 100,000 - 1,500,000 บาท'
+                }
+            },
+            {
+                id: 'sleeping-pills',
+                name: 'ยานอนหลับและกลุ่มเบนโซฯ (Benzodiazepines)',
+                streetNames: 'ยาเสียสาว, อัลปราโซแลม, แวเลียม, โรฮิบนอล',
+                category: 'depressant',
+                categoryLabel: 'กดประสาท',
+                dangerLevel: 'high',
+                dangerLabel: 'อันตรายรุนแรง / สูญเสียความทรงจำ',
+                summary: 'ยากลุ่มวัตถุออกฤทธิ์ต่อจิตและประสาท หากใช้เกินขนาดหรือผสมแอลกอฮอล์จะกดการหายใจจนเสียชีวิต และมักถูกใช้ก่ออาชญากรรม',
+                brainMechanism: 'เสริมฤทธิ์ของสารสื่อประสาท GABA ในสมอง ทำให้เซลล์ประสาทหยุดส่งสัญญาณชั่วคราว กดการทำงานของสมองส่วนความจำและสติสัมปชัญญะ',
+                shortTerm: 'ง่วงซึมรุนแรง สูญเสียความทรงจำชั่วขณะ (Anterograde Amnesia) เดินเซ พูดไม่ชัด กล้ามเนื้ออ่อนแรง',
+                longTerm: 'สมองเสื่อม ความจำระยะยาวบกพร่อง ภาวะซึมเศร้า เสี่ยงหยุดหายใจขณะหลับโดยเฉพาะเมื่อดื่มสุราร่วมด้วย',
+                withdrawal: 'ห้ามหยุดยาทันที! อาจเกิดอาการชักรุนแรง (Seizures) สับสน ประสาทหลอน หัวใจเต้นเร็ว และวิตกกังวลขั้นวิกฤต',
+                thaiLaw: {
+                    schedule: 'วัตถุออกฤทธิ์ต่อจิตและประสาท ประเภท 2 (เช่น Alprazolam, Midazolam)',
+                    usePenalty: 'เสพโดยไม่มีใบสั่งแพทย์: จำคุกไม่เกิน 1 ปี หรือปรับไม่เกิน 20,000 บาท หรือทั้งจำทั้งปรับ',
+                    possessionPenalty: 'ครอบครองโดยไม่ได้รับอนุญาต: จำคุก 1-5 ปี และปรับ 20,000 - 100,000 บาท',
+                    traffickingPenalty: 'ขายหรือนำไปใช้มอมเมาผู้อื่น: จำคุก 4-20 ปี และปรับ 400,000 - 2,000,000 บาท'
+                }
+            },
+            {
+                id: 'lsd',
+                name: 'แอลเอสดี / แสตมป์มรณะ (LSD)',
+                streetNames: 'แสตมป์เมา, แอซิด (Acid), กระดาษเมา',
+                category: 'hallucinogen',
+                categoryLabel: 'หลอนประสาท',
+                dangerLevel: 'high',
+                dangerLabel: 'อันตรายรุนแรง / จิตหลอนเฉียบพลัน',
+                summary: 'สารหลอนประสาทฤทธิ์แรงมากเพียงปริมาณไมโครกรัม มักหยดลงบนกระดาษซับลวดลายการ์ตูน ทำให้การรับรู้บิดเบี้ยวรุนแรง',
+                brainMechanism: 'จับตัวรับ Serotonin 5-HT2A ในเปลือกสมอง ทำให้สมองส่วนต่างๆ สื่อสารข้ามกันผิดปกติ (เช่น มองเห็นเสียง หรือได้ยินสี)',
+                shortTerm: 'เห็นภาพหลอนบิดเบี้ยว การรับรู้เวลาและระยะทางผิดเพี้ยน รูม่านตาขยาย หัวใจเต้นเร็ว อารมณ์สวิงสุดขั้ว',
+                longTerm: 'เกิดภาวะ HPPD (เห็นภาพหลอนย้อนกลับแม้เลิกเสพไปหลายเดือนหรือหลายปี) กระตุ้นโรคจิตเภทแฝง',
+                withdrawal: 'ไม่มีอาการลงแดงทางกายรุนแรง แต่เกิดภาวะสับสนทางจิตใจ วิตกกังวล และแยกแยะความจริงไม่ออก',
+                thaiLaw: {
+                    schedule: 'ยาเสพติดให้โทษประเภท 1',
+                    usePenalty: 'การเสพ: จำคุกไม่เกิน 1 ปี หรือปรับไม่เกิน 20,000 บาท หรือทั้งจำทั้งปรับ',
+                    possessionPenalty: 'ครอบครองโดยไม่ได้รับอนุญาต: จำคุก 1-10 ปี และปรับ 20,000 - 200,000 บาท',
+                    traffickingPenalty: 'จำหน่าย/นำเข้า: จำคุก 2 ปี ถึงตลอดชีวิต และปรับสูงสุด 5,000,000 บาท'
+                }
+            },
+            {
+                id: 'magic-mushrooms',
+                name: 'เห็ดขี้ควาย / สารไซโลไซบิน (Psilocybin)',
+                streetNames: 'เห็ดเมา, เห็ดวิเศษ, Magic Mushrooms',
+                category: 'hallucinogen',
+                categoryLabel: 'หลอนประสาท',
+                dangerLevel: 'high',
+                dangerLabel: 'อันตรายรุนแรง / เสี่ยงอุบัติเหตุถึงชีวิต',
+                summary: 'เห็ดพิษที่มีสารไซโลไซบิน ออกฤทธิ์หลอนประสาทคล้าย LSD มักนำไปปั่นผสมเครื่องดื่ม เสี่ยงเกิดภาวะ Bad Trip ทำร้ายตนเอง',
+                brainMechanism: 'สารไซโลไซบินเปลี่ยนเป็น Psilocin ในร่างกาย เข้ากระตุ้นตัวรับเซโรโทนิน ทำให้สมองส่วนควบคุมเหตุผล (Default Mode Network) ทำงานผิดเพี้ยน',
+                shortTerm: 'คลื่นไส้อาเจียน เห็นภาพหลอน เคลิ้มฝัน หวาดกลัวสุดขีด (Panic Attack) สูญเสียการควบคุมตนเอง',
+                longTerm: 'โรคจิตหลอนเรื้อรัง ความผิดปกติทางอารมณ์ และเสี่ยงกินเห็ดพิษชนิดอื่นปะปนจนตับวายเสียชีวิต',
+                withdrawal: 'อ่อนเพลียทางจิตใจ สับสน นอนไม่หลับ วิตกกังวลในระยะสั้น',
+                thaiLaw: {
+                    schedule: 'ยาเสพติดให้โทษประเภท 5 (ตามประกาศกระทรวงสาธารณสุข)',
+                    usePenalty: 'การเสพ: จำคุกไม่เกิน 1 ปี หรือปรับไม่เกิน 20,000 บาท หรือทั้งจำทั้งปรับ',
+                    possessionPenalty: 'ครอบครองโดยไม่ได้รับอนุญาต: จำคุกไม่เกิน 5 ปี และปรับไม่เกิน 500,000 บาท',
+                    traffickingPenalty: 'ผลิต/นำเข้า/จำหน่าย: จำคุกไม่เกิน 5-15 ปี และปรับสูงสุด 1,500,000 บาท'
+                }
+            },
+            {
+                id: 'ecstasy-mdma',
+                name: 'ยาอี / ยาเลิฟ (MDMA / Ecstasy)',
+                streetNames: 'เอ็กซ์ตาซี, ขนม, ยาเลิฟ, โมลลี่ (Molly)',
+                category: 'mixed',
+                categoryLabel: 'ออกฤทธิ์ผสมผสาน',
+                dangerLevel: 'extreme',
+                dangerLabel: 'อันตรายสูงสุด / ภาวะตัวร้อนช็อก',
+                summary: 'ออกฤทธิ์ทั้งกระตุ้นและหลอนประสาท นิยมลักลอบใช้ในงานปาร์ตี้ ทำให้ร่างกายสูญเสียน้ำและอุณหภูมิพุ่งสูงจนอวัยวะล้มเหลว',
+                brainMechanism: 'บังคับให้สมองปล่อยสารเซโรโทนิน โดพามีน และนอร์เอพิเนฟรินพร้อมกันมหาศาล จนคลังเซโรโทนินในสมองเหือดแห้งอย่างรวดเร็ว',
+                shortTerm: 'ตื่นตัว เคลิบเคลิ้ม กรามเกร็งกัดฟัน เหงื่อออกท่วมตัว ร่างกายขาดน้ำรุนแรง หัวใจเต้นผิดจังหวะ',
+                longTerm: 'ปลายประสาทเซโรโทนินถูกทำลายถาวร เกิดโรคซึมเศร้าเรื้อรัง (Suicide Tuesday) ความจำเสื่อม ตับและไตวาย',
+                withdrawal: 'ซึมเศร้าดิ่งรุนแรง อ่อนเพลีย หงุดหงิดง่าย ไม่มีสมาธิ วิตกกังวลนานหลายสัปดาห์',
+                thaiLaw: {
+                    schedule: 'ยาเสพติดให้โทษประเภท 1',
+                    usePenalty: 'การเสพ: จำคุกไม่เกิน 1 ปี หรือปรับไม่เกิน 20,000 บาท หรือทั้งจำทั้งปรับ',
+                    possessionPenalty: 'ครอบครองโดยไม่ได้รับอนุญาต: จำคุก 1-10 ปี และปรับ 20,000 - 200,000 บาท',
+                    traffickingPenalty: 'จำหน่าย/ผลิต/นำเข้า: จำคุก 2 ปี ถึงตลอดชีวิต และปรับสูงสุด 5,000,000 บาท'
+                }
+            },
+            {
+                id: 'ketamine',
+                name: 'เคตามีน / ยาเค (Ketamine)',
+                streetNames: 'ยาเค, เคเกล็ด, เคนมผง (อันตรายถึงตาย)',
+                category: 'mixed',
+                categoryLabel: 'ออกฤทธิ์ผสมผสาน',
+                dangerLevel: 'extreme',
+                dangerLabel: 'อันตรายสูงสุด / ทำลายกระเพาะปัสสาวะ',
+                summary: 'ยาสลบทางการแพทย์ที่ถูกนำมาใช้ผิดวัตถุประสงค์ ออกฤทธิ์ตัดขาดการรับรู้ระหว่างจิตใจกับร่างกาย (K-Hole)',
+                brainMechanism: 'ปิดกั้นตัวรับ Glutamate (NMDA Receptor) ในสมอง ทำให้สมองหยุดประมวลผลความรู้สึกและสิ่งแวดล้อมเกิดภาวะหลอนแยกตัว',
+                shortTerm: 'มึนงง สูญเสียการทรงตัว (K-Hole) เห็นภาพหลอน ไม่รู้สึกเจ็บปวด ความดันสูง สำลักอาเจียน',
+                longTerm: 'กระเพาะปัสสาวะอักเสบเป็นแผลเรื้อรัง (Ketamine Bladder) ปัสสาวะเป็นเลือด กลั้นปัสสาวะไม่ได้ สมองฝ่อ',
+                withdrawal: 'อยากยารุนแรง ซึมเศร้า วิตกกังวล สับสน นอนไม่หลับ ปวดท้องน้อยเรื้อรัง',
+                thaiLaw: {
+                    schedule: 'วัตถุออกฤทธิ์ต่อจิตและประสาท ประเภท 2',
+                    usePenalty: 'เสพโดยไม่ได้รับอนุญาต: จำคุกไม่เกิน 1 ปี หรือปรับไม่เกิน 20,000 บาท หรือทั้งจำทั้งปรับ',
+                    possessionPenalty: 'ครอบครองโดยไม่ได้รับอนุญาต: จำคุก 1-5 ปี และปรับ 20,000 - 100,000 บาท',
+                    traffickingPenalty: 'ขาย/นำเข้า/ผลิต (รวมถึงสูตรผสมเคนมผง): จำคุก 4-20 ปี และปรับสูงสุด 2,000,000 บาท'
+                }
+            },
+            {
+                id: 'ecig-pod',
+                name: 'บุหรี่ไฟฟ้า / พอตเค / นิโคตินสังเคราะห์',
+                streetNames: 'พอต (Pod), พอตเค (ผสมยาเค/เอโทมิเดต), Vape',
+                category: 'novel',
+                categoryLabel: 'สารระเหย / รูปแบบใหม่',
+                dangerLevel: 'high',
+                dangerLabel: 'อันตรายรุนแรง / ทำลายปอดเยาวชน',
+                summary: 'อุปกรณ์สูบไอระเหยที่มีนิโคตินความเข้มข้นสูงมาก และปัจจุบันมีการลักลอบผสมสารเอโทมิเดต (ยาสลบ) หรือยาเคในน้ำยาพอต',
+                brainMechanism: 'นิโคตินเกลือ (Nicotine Salt) ดูดซึมเข้าสู่สมองภายใน 7 วินาที กระตุ้นโดพามีนซ้ำๆ ทำลายพัฒนาการของสมองส่วนหน้าในวัยรุ่น (Prefrontal Cortex)',
+                shortTerm: 'หัวใจเต้นเร็ว หลอดเลือดหดตัว ไอแห้ง ระคายเคืองหลอดลม หากเป็นพอตผสมสารสลบจะวูบหมดสติทันที',
+                longTerm: 'ปอดอักเสบรุนแรงเฉียบพลัน (EVALI) ถุงลมโป่งพองก่อนวัย เสี่ยงโรคหัวใจและหลอดเลือดสมอง',
+                withdrawal: 'หงุดหงิดกระสับกระส่าย สมาธิสั้น ปวดศีรษะ อยากสูบตลอดเวลา นอนไม่หลับ',
+                thaiLaw: {
+                    schedule: 'สินค้าต้องห้ามนำเข้า (พ.ร.บ.ศุลกากร / คุ้มครองผู้บริโภค) และหากผสมยาเค/เอโทมิเดต เข้าข่ายวัตถุออกฤทธิ์ฯ ประเภท 2',
+                    usePenalty: 'สูบในเขตปลอดบุหรี่: ปรับไม่เกิน 5,000 บาท / หากสูบพอตผสมสารเสพติด: โทษเสพวัตถุออกฤทธิ์ จำคุกไม่เกิน 1 ปี',
+                    possessionPenalty: 'ครอบครองบุหรี่ไฟฟ้าที่ลักลอบนำเข้า: จำคุกไม่เกิน 5 ปี หรือปรับ 4 เท่าของราคาของ',
+                    traffickingPenalty: 'ขายบุหรี่ไฟฟ้า: จำคุกไม่เกิน 3 ปี หรือปรับไม่เกิน 600,000 บาท (หากผสมสารเสพติด โทษจำคุกสูงสุด 20 ปี)'
+                }
+            },
+            {
+                id: 'inhalants',
+                name: 'สารระเหย (Inhalants / ทินเนอร์ / กาว)',
+                streetNames: 'ดมกาว, ทินเนอร์, เบนซิน, น้ำมันก๊าด',
+                category: 'novel',
+                categoryLabel: 'สารระเหย / รูปแบบใหม่',
+                dangerLevel: 'extreme',
+                dangerLabel: 'อันตรายสูงสุด / ทำลายเนื้อสมองโดยตรง',
+                summary: 'สารเคมีอุตสาหกรรมที่ระเหยเป็นไอได้ง่าย เมื่อสูดดมจะละลายเยื่อหุ้มเซลล์ประสาทและทำลายอวัยวะภายในอย่างถาวร',
+                brainMechanism: 'สารไฮโดรคาร์บอนละลายชั้นไขมันไมอีลิน (Myelin Sheath) ที่หุ้มเส้นใยประสาท ทำให้การส่งกระแสประสาทลัดวงจรและสมองขาดออกซิเจน',
+                shortTerm: 'มึนเมา พูดอ้อแอ้ เห็นภาพหลอน คลื่นไส้ เสี่ยงหัวใจเต้นผิดจังหวะฉับพลัน (Sudden Sniffing Death)',
+                longTerm: 'สมองพิการถาวร เดินเซ มือสั่น ตาบอด หูหนวก ตับและไตถูกทำลาย ไขกระดูกฝ่อเกิดมะเร็งเม็ดเลือดขาว',
+                withdrawal: 'ปวดศีรษะรุนแรง คลื่นไส้ มือสั่น เหงื่อออก วิตกกังวลและอารมณ์แปรปรวน',
+                thaiLaw: {
+                    schedule: 'พ.ร.ก. ป้องกันการใช้สารระเหย พ.ศ. 2533 (และกฎหมายที่เกี่ยวข้อง)',
+                    usePenalty: 'สูดดมสารระเหยเพื่อบำบัดความต้องการ: จำคุกไม่เกิน 2 ปี หรือปรับไม่เกิน 20,000 บาท หรือทั้งจำทั้งปรับ',
+                    possessionPenalty: 'จูงใจ/ยุยงให้ผู้อื่นสูดดม: จำคุกไม่เกิน 2 ปี หรือปรับไม่เกิน 20,000 บาท',
+                    traffickingPenalty: 'จำหน่ายสารระเหยแก่ผู้มีอายุต่ำกว่า 18 ปี หรือรู้ว่าจะนำไปดม: จำคุกไม่เกิน 3 ปี หรือปรับไม่เกิน 30,000 บาท'
+                }
+            },
+            {
+                id: 'kratom-cocktail',
+                name: 'น้ำกระท่อมต้มผสมยาแก้ไอ (4x100)',
+                streetNames: 'สี่คูณร้อย, น้ำท่อมผสมโปรฯ, ยาแก้ไอฝาแดง',
+                category: 'novel',
+                categoryLabel: 'สารระเหย / รูปแบบใหม่',
+                dangerLevel: 'moderate',
+                dangerLabel: 'อันตรายสะสม / พิษต่อตับและไต',
+                summary: 'แม้พืชกระท่อมจะปลดล็อกแล้ว แต่การนำมาต้มขายโดยไม่ได้รับอนุญาต หรือผสมยาแก้ไอ/ยากล่อมประสาท ก่อพิษรุนแรงต่อตับ ไต และสมอง',
+                brainMechanism: 'สารไมทราไจนีน (Mitragynine) จับตัวรับโอปิออยด์อ่อนๆ เมื่อผสมยาแก้ไอ (Dextromethorphan / Promethazine) จะเสริมฤทธิ์กดประสาทและหลอนประสาท',
+                shortTerm: 'มึนซึม คลื่นไส้อาเจียน ท้องผูก ปากแห้ง ความดันสูง หากผสมยาแก้ไอเกินขนาดจะชักและกดการหายใจ',
+                longTerm: 'ตับอักเสบจากพิษยา ไตวายเรื้อรัง ลำไส้อุดตันจากกากใบกระท่อม ผิวคล้ำเกรียม เสพติดทางกาย',
+                withdrawal: 'ปวดเมื่อยตามตัว น้ำมูกไหล หงุดหงิด นอนไม่หลับ อ่อนเพลียขาดแรงทำงาน',
+                thaiLaw: {
+                    schedule: 'พ.ร.บ. พืชกระท่อม พ.ศ. 2565 และ พ.ร.บ. อาหาร / พ.ร.บ. ยา (กรณีผสมยาแก้ไอ)',
+                    usePenalty: 'ห้ามขายให้ผู้มีอายุต่ำกว่า 18 ปี สตรีมีครรภ์ และห้ามขายในสถานศึกษา (ฝ่าฝืนปรับสูงสุด 30,000 บาท)',
+                    possessionPenalty: 'ผลิต/ขายน้ำต้มกระท่อมบรรจุขวดโดยไม่ได้รับอนุญาต (ผิด พ.ร.บ. อาหาร): จำคุก 6 เดือน - 2 ปี และปรับ 5,000 - 20,000 บาท',
+                    traffickingPenalty: 'ผสมยาแก้ไอ/ยาแผนปัจจุบันขาย (4x100): ผิด พ.ร.บ. ยา โทษจำคุกไม่เกิน 5 ปี และปรับไม่เกิน 10,000 บาท (หากผสมวัตถุออกฤทธิ์ โทษจำคุกสูงสุด 20 ปี)'
+                }
+            }
+        ];
+
+        let activeCategory = 'all';
+        let currentModalSubstance = null;
+
+        function renderSubstances() {
+            const container = document.getElementById('substances-container');
+            const query = document.getElementById('substance-search').value.toLowerCase().trim();
+            const dangerFilter = document.getElementById('danger-filter').value;
+
+            const filtered = substanceDB.filter(item => {
+                const matchCat = activeCategory === 'all' || item.category === activeCategory;
+                const matchDanger = dangerFilter === 'all' || item.dangerLevel === dangerFilter;
+                const matchText = item.name.toLowerCase().includes(query) ||
+                                  item.streetNames.toLowerCase().includes(query) ||
+                                  item.summary.toLowerCase().includes(query);
+                return matchCat && matchDanger && matchText;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full glass-panel rounded-2xl p-12 text-center space-y-2">
+                        <i class="fa-solid fa-folder-open text-3xl text-slate-500"></i>
+                        <p class="text-slate-300 font-semibold">ไม่พบข้อมูลสารเสพติดที่ตรงกับเงื่อนไขการค้นหา</p>
+                        <p class="text-xs text-slate-500">ลองเปลี่ยนคำค้นหาหรือเลือกตัวกรอง "ทั้งหมด"</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => {
+                const dangerBadgeClass = item.dangerLevel === 'extreme'
+                    ? 'bg-rose-500/15 text-rose-400 border-rose-500/30'
+                    : item.dangerLevel === 'high'
+                    ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
+                    : 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30';
+
+                return `
+                    <div class="glass-panel card-interactive rounded-2xl p-6 flex flex-col justify-between space-y-5">
+                        <div class="space-y-3">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">
+                                    ${item.categoryLabel}
+                                </span>
+                                <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full border ${dangerBadgeClass}">
+                                    ${item.dangerLabel.split('/')[0].trim()}
+                                </span>
+                            </div>
+
+                            <div>
+                                <h3 class="font-heading text-lg font-bold text-white leading-snug">${item.name}</h3>
+                                <p class="text-xs text-amber-400/90 font-mono mt-1">ชื่อเรียก: ${item.streetNames}</p>
+                            </div>
+
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                ${item.summary}
+                            </p>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-800/80">
+                            <button onclick="openSubstanceModal('${item.id}')" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-amber-500 text-slate-200 hover:text-slate-950 font-heading font-bold text-xs transition flex items-center justify-center gap-2">
+                                <span>เจาะลึกกลไกสมอง & โทษกฎหมาย</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterCategory(cat, btn) {
+            activeCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.classList.remove('active', 'bg-amber-500', 'text-slate-950');
+                b.classList.add('bg-slate-900', 'text-slate-300', 'border', 'border-slate-800');
+            });
+            btn.classList.add('active', 'bg-amber-500', 'text-slate-950');
+            btn.classList.remove('bg-slate-900', 'text-slate-300', 'border', 'border-slate-800');
+            renderSubstances();
+        }
+
+        document.getElementById('substance-search').addEventListener('input', renderSubstances);
+        document.getElementById('danger-filter').addEventListener('change', renderSubstances);
+
+        // Modal Logic
+        function openSubstanceModal(id) {
+            const item = substanceDB.find(s => s.id === id);
+            if (!item) return;
+            currentModalSubstance = item;
+
+            document.getElementById('m-cat-badge').textContent = item.categoryLabel;
+            document.getElementById('m-danger-badge').textContent = item.dangerLabel;
+            document.getElementById('m-title').textContent = item.name;
+            document.getElementById('m-street').textContent = `ชื่อเรียกในวงการ: ${item.streetNames}`;
+
+            // Reset to first tab
+            const firstTabBtn = document.querySelector('.m-tab-btn');
+            switchModalTab('brain', firstTabBtn);
+
+            const modal = document.getElementById('substance-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function switchModalTab(tabKey, btn) {
+            if (!currentModalSubstance) return;
+
+            document.querySelectorAll('.m-tab-btn').forEach(b => {
+                b.classList.remove('active', 'bg-amber-500', 'text-slate-950');
+                b.classList.add('bg-slate-800', 'text-slate-300');
+            });
+            btn.classList.add('active', 'bg-amber-500', 'text-slate-950');
+            btn.classList.remove('bg-slate-800', 'text-slate-300');
+
+            const container = document.getElementById('modal-tab-content');
+            const s = currentModalSubstance;
+
+            if (tabKey === 'brain') {
+                container.innerHTML = `
+                    <div class="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+                        <div class="flex items-center gap-2 text-amber-400 font-bold text-sm">
+                            <i class="fa-solid fa-brain"></i> กลไกทางเภสัชวิทยาและการทำลายเซลล์ประสาท
+                        </div>
+                        <p class="text-slate-200 leading-relaxed">${s.brainMechanism}</p>
+                        <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200">
+                            <strong>ข้อเท็จจริงทางการแพทย์:</strong> การใช้ซ้ำทำให้สมองปรับตัวลดจำนวนตัวรับสารสื่อประสาท (Downregulation) ส่งผลให้ผู้เสพต้องเพิ่มปริมาณยามากขึ้นเรื่อยๆ และไม่สามารถมีความสุขกับกิจกรรมปกติได้อีก
+                        </div>
+                    </div>
+                `;
+            } else if (tabKey === 'effects') {
+                container.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-5 rounded-2xl bg-slate-950/80 border border-amber-500/30 space-y-2">
+                            <h4 class="font-bold text-amber-400 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-stopwatch"></i> อาการเฉียบพลัน / ระยะสั้น
+                            </h4>
+                            <p class="text-slate-200 text-xs sm:text-sm leading-relaxed">${s.shortTerm}</p>
+                        </div>
+                        <div class="p-5 rounded-2xl bg-slate-950/80 border border-rose-500/30 space-y-2">
+                            <h4 class="font-bold text-rose-400 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-skull-crossbones"></i> ผลกระทบสะสม / ระยะยาว
+                            </h4>
+                            <p class="text-slate-200 text-xs sm:text-sm leading-relaxed">${s.longTerm}</p>
+                        </div>
+                    </div>
+                `;
+            } else if (tabKey === 'withdrawal') {
+                container.innerHTML = `
+                    <div class="p-5 rounded-2xl bg-slate-950/80 border border-sky-500/30 space-y-3">
+                        <h4 class="font-bold text-sky-400 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-heart-crack"></i> อาการถอนยา / สภาวะลงแดงเมื่อหยุดเสพ (Withdrawal Syndrome)
+                        </h4>
+                        <p class="text-slate-200 leading-relaxed">${s.withdrawal}</p>
+                        <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300">
+                            <i class="fa-solid fa-user-doctor mr-1"></i> <strong>แนวทางปลอดภัย:</strong> การถอนพิษยาควรอยู่ภายใต้การดูแลของแพทย์ (โทรปรึกษา 1165) เพื่อรับยาลดอาการทรมานและป้องกันภาวะแทรกซ้อนอันตราย
+                        </div>
+                    </div>
+                `;
+            } else if (tabKey === 'law') {
+                container.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-xs sm:text-sm font-bold text-rose-300">
+                            <i class="fa-solid fa-scale-balanced mr-1.5"></i> การจัดประเภท: ${s.thaiLaw.schedule}
+                        </div>
+                        <div class="grid grid-cols-1 gap-3 text-xs sm:text-sm">
+                            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800">
+                                <span class="font-bold text-emerald-400 block mb-1">1. โทษฐานเสพ (ผู้เสพคือผู้ป่วย):</span>
+                                <p class="text-slate-300">${s.thaiLaw.usePenalty}</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800">
+                                <span class="font-bold text-amber-400 block mb-1">2. โทษฐานครอบครอง:</span>
+                                <p class="text-slate-300">${s.thaiLaw.possessionPenalty}</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800">
+                                <span class="font-bold text-rose-400 block mb-1">3. โทษฐานจำหน่าย / ผลิต / นำเข้า:</span>
+                                <p class="text-slate-300">${s.thaiLaw.traffickingPenalty}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('substance-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnBackdrop(e) {
+            if (e.target.id === 'substance-modal') {
+                closeModal();
+            }
+        }
+
+        // ---------------------------------------------------------------------
+        // 2. SYNAPSE & NEUROTRANSMITTER SIMULATOR (HTML5 CANVAS)
+        // ---------------------------------------------------------------------
+        const brainCanvas = document.getElementById('brain-canvas');
+        const bCtx = brainCanvas.getContext('2d');
+        let currentBrainState = 'normal';
+        let particles = [];
+
+        const brainStateConfigs = {
+            normal: {
+                badge: '● NORMAL SYNAPTIC TRANSMISSION',
+                badgeColor: 'text-emerald-400',
+                title: '1. สภาวะสมดุลของสมอง (Healthy Synaptic Function)',
+                titleColor: 'text-emerald-400',
+                body: 'เซลล์ประสาทต้นทาง (Pre-synaptic) ปลดปล่อยสารสื่อประสาทในปริมาณสมดุล เพื่อจับกับตัวรับ (Receptors) ฝั่งตรงข้าม และดูดซับส่วนเกินกลับอย่างเป็นระบบ',
+                clinical: 'อาการทางคลินิก: อารมณ์มั่นคง มีสมาธิ การหายใจและอัตราการเต้นหัวใจปกติ',
+                levels: { dopamine: 100, serotonin: 100, gaba: 100, glutamate: 100 },
+                bars: { dopamine: 35, serotonin: 35, gaba: 35, glutamate: 35 },
+                particleCount: 36,
+                particleSpeed: 1.8,
+                particleColor: '#34d399',
+                receptorColor: '#38bdf8',
+                receptorBurnout: false
+            },
+            meth: {
+                badge: '▲ DOPAMINE SURGE & RECEPTOR BURNOUT (METH/ICE)',
+                badgeColor: 'text-rose-400',
+                title: '2. ฤทธิ์ยาบ้า/ไอซ์ (Dopamine Surge & Receptor Burnout)',
+                titleColor: 'text-rose-400',
+                body: 'ยาบ้า/ไอซ์ บังคับให้เซลล์ประสาทปล่อยโดพามีนทะลักออกมามากกว่าปกติถึง 1,000% และปิดกั้นช่องทางดูดกลับ สารเคมีส่วนเกินจะเผาไหม้ทำลายตัวรับสัญญาณจนเสียหายถาวร',
+                clinical: 'อาการทางคลินิก: หัวใจเต้นรัว ความดันพุ่งสูง ตื่นตัวเกินเหตุ หวาดระแวง ประสาทหลอน',
+                levels: { dopamine: 1050, serotonin: 180, gaba: 45, glutamate: 240 },
+                bars: { dopamine: 100, serotonin: 60, gaba: 15, glutamate: 80 },
+                particleCount: 150,
+                particleSpeed: 4.8,
+                particleColor: '#f43f5e',
+                receptorColor: '#ef4444',
+                receptorBurnout: true
+            },
+            opioid: {
+                badge: '▼ OPIOID OVERLOAD & RESPIRATORY SUPPRESSION',
+                badgeColor: 'text-sky-400',
+                title: '3. ฤทธิ์เฮโรอีน/มอร์ฟีน (Opioid & Respiratory Suppression)',
+                titleColor: 'text-sky-400',
+                body: 'สารกลุ่มฝิ่นเข้ายึดครองตัวรับ Opioid และเร่งสารยับยั้ง GABA จนกดการส่งกระแสประสาทเกือบทั้งหมด โดยเฉพาะศูนย์ควบคุมการหายใจในก้านสมอง',
+                clinical: 'อาการทางคลินิก: ง่วงซึมลึก ม่านตาหดเล็ก หายใจช้าลงจนอาจหยุดหายใจและเสียชีวิต (Overdose)',
+                levels: { dopamine: 220, serotonin: 90, gaba: 280, glutamate: 20 },
+                bars: { dopamine: 65, serotonin: 30, gaba: 92, glutamate: 8 },
+                particleCount: 14,
+                particleSpeed: 0.45,
+                particleColor: '#38bdf8',
+                receptorColor: '#64748b',
+                receptorBurnout: false
+            },
+            psychedelic: {
+                badge: '◈ SEROTONIN / GLUTAMATE CHAOTIC DISRUPTION',
+                badgeColor: 'text-purple-400',
+                title: '4. ฤทธิ์ LSD / เคตามีน (Serotonin & Glutamate Disruption)',
+                titleColor: 'text-purple-400',
+                body: 'LSD รบกวนตัวรับ Serotonin ส่วนเคตามีนปิดกั้นตัวรับ Glutamate ทำให้สัญญาณประสาทวิ่งสะเปะสะปะข้ามส่วนสมอง บิดเบือนการมองเห็น เสียง และมิติเวลา',
+                clinical: 'อาการทางคลินิก: เห็นภาพหลอนบิดเบี้ยว จิตหลุดแยกจากร่างกาย (K-Hole) หวาดกลัวขั้นรุนแรง',
+                levels: { dopamine: 130, serotonin: 340, gaba: 70, glutamate: 15 },
+                bars: { dopamine: 45, serotonin: 95, gaba: 25, glutamate: 6 },
+                particleCount: 75,
+                particleSpeed: 3.1,
+                particleColor: '#c084fc',
+                receptorColor: '#a855f7',
+                receptorBurnout: false
+            },
+            withdrawal: {
+                badge: '⚠ NEUROTRANSMITTER DEPLETION (WITHDRAWAL CRASH)',
+                badgeColor: 'text-amber-400',
+                title: '5. สภาวะลงแดง / สมองขาดสารสื่อประสาท (Depletion)',
+                titleColor: 'text-amber-400',
+                body: 'เมื่อหยุดเสพกะทันหัน คลังโดพามีนและเซโรโทนินเหือดแห้ง ขณะที่ตัวรับสัญญาณถูกทำลายไปแล้ว ทำให้สมองไม่สามารถส่งสัญญาณความสุขหรือควบคุมความเจ็บปวดได้',
+                clinical: 'อาการทางคลินิก: ซึมเศร้าดิ่งรุนแรง อ่อนเพลีย ปวดกระดูก กระสับกระส่าย อยากยาอย่างทรมาน',
+                levels: { dopamine: 15, serotonin: 20, gaba: 30, glutamate: 190 },
+                bars: { dopamine: 6, serotonin: 8, gaba: 12, glutamate: 70 },
+                particleCount: 8,
+                particleSpeed: 0.7,
+                particleColor: '#f59e0b',
+                receptorColor: '#475569',
+                receptorBurnout: true
+            }
+        };
+
+        function resizeBrainCanvas() {
+            const parent = brainCanvas.parentElement;
+            brainCanvas.width = parent.clientWidth;
+            brainCanvas.height = parent.clientHeight;
+        }
+        window.addEventListener('resize', resizeBrainCanvas);
+        resizeBrainCanvas();
+
+        class SignalParticle {
+            constructor() {
+                this.spawn(true);
+            }
+            spawn(randomProgress = false) {
+                const w = brainCanvas.width;
+                const h = brainCanvas.height;
+                this.startX = w * 0.27;
+                this.startY = h * (0.28 + Math.random() * 0.44);
+                this.endX = w * 0.73;
+                this.endY = h * (0.22 + Math.random() * 0.56);
+                this.progress = randomProgress ? Math.random() : 0;
+                this.wobble = Math.random() * Math.PI * 2;
+                this.size = currentBrainState === 'meth' ? (3 + Math.random() * 4) : 3.5;
+            }
+            update() {
+                const cfg = brainStateConfigs[currentBrainState];
+                this.progress += (cfg.particleSpeed * 0.0045);
+                this.wobble += 0.08;
+                if (this.progress >= 1) {
+                    this.spawn(false);
+                }
+            }
+            draw() {
+                const cfg = brainStateConfigs[currentBrainState];
+                let x = this.startX + (this.endX - this.startX) * this.progress;
+                let y = this.startY + (this.endY - this.startY) * this.progress;
+
+                if (currentBrainState === 'psychedelic') {
+                    y += Math.sin(this.wobble * 2) * 18;
+                    x += Math.cos(this.wobble) * 10;
+                } else if (currentBrainState === 'meth') {
+                    y += Math.sin(this.wobble * 3) * 8;
+                }
+
+                bCtx.beginPath();
+                bCtx.arc(x, y, this.size, 0, Math.PI * 2);
+                bCtx.fillStyle = cfg.particleColor;
+                bCtx.shadowBlur = 10;
+                bCtx.shadowColor = cfg.particleColor;
+                bCtx.fill();
+                bCtx.shadowBlur = 0;
+            }
+        }
+
+        function rebuildParticles() {
+            const count = brainStateConfigs[currentBrainState].particleCount;
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push(new SignalParticle());
+            }
+        }
+
+        function animateBrainCanvas() {
+            const w = brainCanvas.width;
+            const h = brainCanvas.height;
+            const cfg = brainStateConfigs[currentBrainState];
+
+            bCtx.fillStyle = 'rgba(9, 13, 22, 0.32)';
+            bCtx.fillRect(0, 0, w, h);
+
+            // Draw Synaptic Cleft Background Grid
+            bCtx.strokeStyle = 'rgba(51, 65, 85, 0.25)';
+            bCtx.lineWidth = 1;
+            bCtx.setLineDash([4, 4]);
+            bCtx.beginPath();
+            bCtx.moveTo(w * 0.5, 20);
+            bCtx.lineTo(w * 0.5, h - 20);
+            bCtx.stroke();
+            bCtx.setLineDash([]);
+
+            // Left: Pre-Synaptic Terminal
+            bCtx.beginPath();
+            bCtx.moveTo(0, h * 0.12);
+            bCtx.quadraticCurveTo(w * 0.30, h * 0.16, w * 0.30, h * 0.50);
+            bCtx.quadraticCurveTo(w * 0.30, h * 0.84, 0, h * 0.88);
+            bCtx.fillStyle = '#151e2e';
+            bCtx.fill();
+            bCtx.strokeStyle = '#334155';
+            bCtx.lineWidth = 3;
+            bCtx.stroke();
+
+            // Vesicles inside Pre-synaptic neuron
+            const vesicleY = [0.34, 0.50, 0.66];
+            vesicleY.forEach(vy => {
+                bCtx.beginPath();
+                bCtx.arc(w * 0.16, h * vy, 16, 0, Math.PI * 2);
+                bCtx.strokeStyle = cfg.particleColor;
+                bCtx.lineWidth = 1.5;
+                bCtx.stroke();
+            });
+
+            // Right: Post-Synaptic Terminal
+            bCtx.beginPath();
+            bCtx.moveTo(w, h * 0.12);
+            bCtx.quadraticCurveTo(w * 0.70, h * 0.16, w * 0.70, h * 0.50);
+            bCtx.quadraticCurveTo(w * 0.70, h * 0.84, w, h * 0.88);
+            bCtx.fillStyle = '#151e2e';
+            bCtx.fill();
+            bCtx.strokeStyle = '#334155';
+            bCtx.lineWidth = 3;
+            bCtx.stroke();
+
+            // Receptors on Post-synaptic membrane
+            const receptorPositions = [0.25, 0.38, 0.50, 0.62, 0.75];
+            receptorPositions.forEach((ry, idx) => {
+                const isDamaged = cfg.receptorBurnout && (idx === 1 || idx === 3);
+                bCtx.beginPath();
+                bCtx.arc(w * 0.70, h * ry, 9, Math.PI * 0.5, Math.PI * 1.5);
+                bCtx.strokeStyle = isDamaged ? '#475569' : cfg.receptorColor;
+                bCtx.lineWidth = isDamaged ? 1.5 : 3.5;
+                bCtx.stroke();
+
+                if (isDamaged) {
+                    bCtx.strokeStyle = '#ef4444';
+                    bCtx.lineWidth = 1.5;
+                    bCtx.beginPath();
+                    bCtx.moveTo(w * 0.70 - 6, h * ry - 6);
+                    bCtx.lineTo(w * 0.70 + 6, h * ry + 6);
+                    bCtx.stroke();
+                }
+            });
+
+            // Labels
+            bCtx.fillStyle = '#94a3b8';
+            bCtx.font = '11px Prompt, sans-serif';
+            bCtx.fillText('เซลล์ประสาทส่งสัญญาณ', 14, 26);
+            bCtx.fillText('ตัวรับสัญญาณ (Receptors)', w - 145, 26);
+
+            // Particles
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animateBrainCanvas);
+        }
+
+        function setBrainState(stateKey) {
+            currentBrainState = stateKey;
+            const cfg = brainStateConfigs[stateKey];
+
+            // Update Button Styles
+            document.querySelectorAll('.sim-state-btn').forEach(btn => {
+                btn.className = 'sim-state-btn p-3 rounded-xl border border-slate-800 bg-slate-900/90 text-slate-300 hover:border-slate-600 text-left transition';
+            });
+            const activeBtn = document.getElementById(`sim-btn-${stateKey}`);
+            if (activeBtn) {
+                activeBtn.className = 'sim-state-btn p-3 rounded-xl border border-amber-500 bg-amber-500/15 text-amber-300 text-left transition shadow-lg';
+            }
+
+            // Update Canvas Badge & Text
+            const badge = document.getElementById('canvas-status-badge');
+            badge.textContent = cfg.badge;
+            badge.className = `font-mono font-semibold ${cfg.badgeColor}`;
+
+            const expTitle = document.getElementById('sim-exp-title');
+            expTitle.textContent = cfg.title;
+            expTitle.className = `font-bold text-base ${cfg.titleColor}`;
+
+            document.getElementById('sim-exp-body').textContent = cfg.body;
+            document.getElementById('sim-exp-clinical').innerHTML = `<i class="fa-solid fa-stethoscope mr-1"></i> ${cfg.clinical}`;
+
+            // Update Bar Chart
+            ['dopamine', 'serotonin', 'gaba', 'glutamate'].forEach(nt => {
+                document.getElementById(`val-${nt}`).textContent = `${cfg.levels[nt]}%`;
+                document.getElementById(`bar-${nt}`).style.width = `${cfg.bars[nt]}%`;
+            });
+
+            rebuildParticles();
+        }
+
+        // ---------------------------------------------------------------------
+        // 3. INTERACTIVE HUMAN BODY IMPACT EXPLORER
+        // ---------------------------------------------------------------------
+        const organData = {
+            brain: {
+                title: 'สมองและระบบประสาทส่วนกลาง (Brain & CNS)',
+                icon: 'fa-brain',
+                color: 'text-sky-400',
+                substances: 'ยาบ้า, ยาไอซ์, เฮโรอีน, LSD, เคตามีน, สารระเหย',
+                cellularDamage: 'สารเสพติดทำลายเยื่อหุ้มไมอีลิน (Myelin Sheath) และก่อให้เกิดอนุมูลอิสระทำลายเซลล์ประสาทในสมองส่วนหน้า (Prefrontal Cortex) และฮิปโปแคมปัส ส่งผลให้เนื้อสมองฝ่อก่อนวัยอันควร',
+                clinicalSymptoms: [
+                    'สูญเสียความจำระยะสั้น สมาธิสั้น การตัดสินใจบกพร่อง',
+                    'เกิดโรคจิตเวชจากสารเสพติด (Drug-induced Psychosis) หูแว่ว เห็นภาพหลอน หวาดระแวง',
+                    'เส้นเลือดในสมองตีบหรือแตกฉับพลัน กลายเป็นอัมพฤกษ์ อัมพาต'
+                ]
+            },
+            heart: {
+                title: 'หัวใจและระบบไหลเวียนโลหิต (Cardiovascular System)',
+                icon: 'fa-heart-pulse',
+                color: 'text-rose-400',
+                substances: 'ยาบ้า, ยาไอซ์, ยาอี, โคเคน, บุหรี่ไฟฟ้า',
+                cellularDamage: 'สารกระตุ้นประสาททำให้หลอดเลือดหัวใจหดเกร็งอย่างรุนแรง (Coronary Vasospasm) กล้ามเนื้อหัวใจขาดเลือดและเกิดพังผืด ส่วนการใช้เข็มฉีดยาทำให้เชื้อแบคทีเรียเข้าทำลายลิ้นหัวใจ',
+                clinicalSymptoms: [
+                    'หัวใจเต้นเร็วผิดจังหวะ (Arrhythmia) ความดันโลหิตพุ่งสูงวิกฤต',
+                    'กล้ามเนื้อหัวใจตายเฉียบพลัน และหัวใจวายในคนอายุน้อย',
+                    'เยื่อบุหัวใจและลิ้นหัวใจอักเสบติดเชื้อรุนแรง (Infective Endocarditis)'
+                ]
+            },
+            lungs: {
+                title: 'ปอดและระบบทางเดินหายใจ (Respiratory System)',
+                icon: 'fa-lungs',
+                color: 'text-emerald-400',
+                substances: 'บุหรี่ไฟฟ้า/พอต, ยาไอซ์ (การสูบควัน), เฮโรอีน, สารระเหย',
+                cellularDamage: 'ไอระเหยเคมีและโลหะหนักทำลายถุงลมปอดและเซลล์ขนกวัด (Cilia) ก่อให้เกิดการอักเสบของเนื้อเยื่อปอด ส่วนกลุ่มกดประสาทจะยับยั้งก้านสมองไม่ให้สั่งการหายใจ',
+                clinicalSymptoms: [
+                    'ปอดอักเสบรุนแรงเฉียบพลัน (EVALI) จากสารเคมีในน้ำยาบุหรี่ไฟฟ้า',
+                    'ถุงลมโป่งพอง หลอดลมอักเสบเรื้อรัง ไอเป็นเลือด หอบเหนื่อยง่าย',
+                    'ภาวะหยุดหายใจขณะหลับและระบบหายใจล้มเหลวจากการเสพเฮโรอีนเกินขนาด'
+                ]
+            },
+            liver: {
+                title: 'ตับ ไต และกระเพาะปัสสาวะ (Liver, Kidneys & Bladder)',
+                icon: 'fa-kidneys',
+                color: 'text-purple-400',
+                substances: 'เคตามีน, ยาอี, น้ำกระท่อมผสมยาแก้ไอ (4x100), สารระเหย',
+                cellularDamage: 'ตับต้องทำงานหนักเพื่อกำจัดสารพิษจนเซลล์ตับตายเกิดพังผืด ไตเกิดภาวะขาดเลือดจากกล้ามเนื้อสลาย (Rhabdomyolysis) ส่วนสารเมตาบอไลต์ของเคตามีนกัดกร่อนผนังเยื่อบุกระเพาะปัสสาวะจนเป็นแผลและหดตัว',
+                clinicalSymptoms: [
+                    'ตับอักเสบเฉียบพลัน ตัวเหลืองตาเหลือง ตับแข็ง และตับวาย',
+                    'ไตวายเฉียบพลันจากภาวะร่างกายขาดน้ำและอุณหภูมิสูงจัด',
+                    'กระเพาะปัสสาวะอักเสบเรื้อรัง ปัสสาวะเป็นเลือด และกลั้นปัสสาวะไม่ได้ตลอดชีวิต (เคตามีน)'
+                ]
+            },
+            systemic: {
+                title: 'ระบบสืบพันธุ์ ช่องปาก และผิวหนัง (Reproductive, Dental & Skin)',
+                icon: 'fa-person-dots-from-line',
+                color: 'text-amber-400',
+                substances: 'ยาไอซ์, ยาบ้า, เฮโรอีน, สารระเหย',
+                cellularDamage: 'หลอดเลือดส่วนปลายหดตัวทำให้ต่อมน้ำลายหยุดทำงาน เกิดกรดกัดกร่อนเคลือบฟันอย่างรวดเร็ว ฮอร์โมนเพศแปรปรวนรุนแรง และเกิดแผลติดเชื้อจากการแกะเกาตามผิวหนัง',
+                clinicalSymptoms: [
+                    'ฟันผุกร่อนดำและหลุดร่วงทั้งปาก (Meth Mouth)',
+                    'ผิวหนังแห้งกร้าน แก่ก่อนวัย มีแผลพุพองติดเชื้อตามใบหน้าและแขนขา',
+                    'เสื่อมสมรรถภาพทางเพศ ประจำเดือนขาด เป็นหมัน และทารกในครรภ์พิการหรือติดยาตั้งแต่กำเนิด'
+                ]
+            }
+        };
+
+        function selectOrgan(organKey) {
+            const data = organData[organKey];
+            if (!data) return;
+
+            // Update SVG Nodes
+            document.querySelectorAll('.organ-node').forEach(node => node.classList.remove('organ-active'));
+            const activeNode = document.getElementById(`node-${organKey}`);
+            if (activeNode) activeNode.classList.add('organ-active');
+
+            // Update Pills
+            document.querySelectorAll('.organ-pill').forEach(pill => {
+                pill.className = 'organ-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/50 transition';
+            });
+            const activePill = document.getElementById(`pill-${organKey}`);
+            if (activePill) {
+                activePill.className = 'organ-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition';
+            }
+
+            // Render Card
+            const card = document.getElementById('organ-detail-card');
+            card.innerHTML = `
+                <div class="flex items-start justify-between gap-4 border-b border-slate-800 pb-4">
+                    <div>
+                        <span class="text-xs font-mono text-slate-400">ระบบอวัยวะที่ได้รับผลกระทบ</span>
+                        <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mt-0.5 flex items-center gap-2.5">
+                            <i class="fa-solid ${data.icon} ${data.color}"></i>
+                            <span>${data.title}</span>
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 text-xs">
+                    <span class="text-slate-400">กลุ่มสารเสพติดตัวการหลัก: </span>
+                    <strong class="text-amber-400">${data.substances}</strong>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-rose-400">ความเสียหายระดับเซลล์และเนื้อเยื่อ:</h4>
+                    <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">${data.cellularDamage}</p>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400">อาการทางคลินิกและโรคแทรกซ้อนที่พบ:</h4>
+                    <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+                        ${data.clinicalSymptoms.map(sym => `
+                            <li class="flex items-start gap-2.5">
+                                <i class="fa-solid fa-triangle-exclamation text-amber-400 mt-1 text-xs"></i>
+                                <span>${sym}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+
+        // ---------------------------------------------------------------------
+        // 4. INTERACTIVE 8-QUESTION QUIZ & DIGITAL CERTIFICATE
+        // ---------------------------------------------------------------------
+        const quizQuestions = [
+            {
+                topic: 'หมวด: กลไกสมอง',
+                question: '1. เหตุใดผู้เสพยาบ้าหรือยาไอซ์ติดต่อกันจึงไม่สามารถรู้สึกมีความสุขกับกิจกรรมปกติในชีวิตประจำวันได้อีก?',
+                options: [
+                    'เพราะยาเข้าไปเพิ่มจำนวนตัวรับสารโดพามีนในสมองมากเกินไป',
+                    'เพราะสารโดพามีนที่ทะลักออกมาอย่างรุนแรงทำลายตัวรับสัญญาณ (Receptors) จนลดจำนวนลง',
+                    'เพราะร่างกายผลิตสารอินซูลินมาต้านฤทธิ์ยาเสพติด',
+                    'เพราะยาไปกระตุ้นการทำงานของกระเพาะอาหารมากเกินไป'
+                ],
+                correct: 1,
+                explanation: 'การหลั่งโดพามีนปริมาณมหาศาลเกินธรรมชาติทำให้ตัวรับสัญญาณในสมองเกิดภาวะไหม้และลดจำนวนลง (Downregulation) สมองจึงตอบสนองต่อความสุขตามธรรมชาติไม่ได้'
+            },
+            {
+                topic: 'หมวด: กลไกสมองและอันตรายเฉียบพลัน',
+                question: '2. สาเหตุหลักของการเสียชีวิตเฉียบพลันในผู้ที่เสพเฮโรอีนหรือมอร์ฟีนเกินขนาด (Overdose) คือข้อใด?',
+                options: [
+                    'อุณหภูมิร่างกายพุ่งสูงจนเกิดภาวะฮีทสโตรก',
+                    'สารไปกดศูนย์ควบคุมการหายใจในก้านสมอง ทำให้หยุดหายใจและขาดออกซิเจน',
+                    'ตับอักเสบเฉียบพลันภายใน 5 นาทีหลังเสพ',
+                    'ระดับน้ำตาลในเลือดพุ่งสูงอย่างรวดเร็ว'
+                ],
+                correct: 1,
+                explanation: 'สารกลุ่มโอปิออยด์ (เฮโรอีน/มอร์ฟีน) จับตัวรับในก้านสมองและกดระบบประสาทส่วนกลางอย่างรุนแรง ส่งผลให้อัตราการหายใจช้าลงจนหยุดหายใจ'
+            },
+            {
+                topic: 'หมวด: ความเข้าใจผิดที่พบบ่อย',
+                question: '3. ข้อใดกล่าวถูกต้องที่สุดเกี่ยวกับ "บุหรี่ไฟฟ้า / พอต" ในกลุ่มเด็กและเยาวชน?',
+                options: [
+                    'เป็นเพียงไอน้ำกลิ่นผลไม้ ปลอดภัยกว่าบุหรี่มวน 100% และไม่เสพติด',
+                    'ช่วยบำรุงปอดและลดความเครียดได้โดยไม่มีผลข้างเคียง',
+                    'มีนิโคตินเกลือความเข้มข้นสูงที่ทำลายพัฒนาการสมองส่วนหน้าของวัยรุ่น และเสี่ยงปอดอักเสบรุนแรง (EVALI)',
+                    'ถูกกฎหมายในประเทศไทยสำหรับผู้ที่มีอายุ 18 ปีขึ้นไป'
+                ],
+                correct: 2,
+                explanation: 'น้ำยาบุหรี่ไฟฟ้ามีนิโคตินสังเคราะห์เข้มข้นสูง สารโลหะหนัก และอาจมีการลักลอบผสมยาเคหรือสารสลบเอโทมิเดต ทำลายปอดและสมองวัยรุ่นอย่างรุนแรง'
+            },
+            {
+                topic: 'หมวด: ผลกระทบต่ออวัยวะ',
+                question: '4. การเสพ "เคตามีน (ยาเค)" ติดต่อกันเป็นเวลานาน มักก่อให้เกิดความเสียหายรุนแรงเฉพาะเจาะจงต่ออวัยวะใดมากที่สุด?',
+                options: [
+                    'กระเพาะปัสสาวะอักเสบเป็นแผลเรื้อรัง ปัสสาวะเป็นเลือด และกลั้นปัสสาวะไม่ได้',
+                    'กระดูกสันหลังคดงออย่างรวดเร็ว',
+                    'ต่อมไทรอยด์โตผิดปกติ',
+                    'เยื่อแก้วหูทะลุทั้งสองข้าง'
+                ],
+                correct: 0,
+                explanation: 'สารเมตาบอไลต์ของเคตามีนที่ขับออกทางปัสสาวะจะกัดกร่อนเยื่อบุผนังกระเพาะปัสสาวะ ทำให้เกิดพังผืด กระเพาะปัสสาวะหดเล็กลงและปัสสาวะเป็นเลือด (Ketamine Bladder)'
+            },
+            {
+                topic: 'หมวด: ประมวลกฎหมายยาเสพติดของไทย',
+                question: '5. ตามประมวลกฎหมายยาเสพติด พ.ศ. 2564 แนวคิดหลักในการปฏิบัติต่อ "ผู้เสพยาเสพติด" คือข้อใด?',
+                options: [
+                    'ต้องจำคุกสถานเดียวโดยไม่มีข้อยกเว้นทุกกรณี',
+                    '"ผู้เสพคือผู้ป่วย" หากสมัครใจเข้ารับการบำบัดรักษาในสถานพยาบาลของรัฐ จะได้รับการยกเว้นโทษ',
+                    'ปรับเป็นเงินอย่างเดียวแล้วปล่อยตัวกลับบ้านโดยไม่ต้องบำบัด',
+                    'ห้ามเข้ารับการรักษาในโรงพยาบาลของรัฐ'
+                ],
+                correct: 1,
+                explanation: 'กฎหมายไทยยึดหลัก "ผู้เสพคือผู้ป่วย" เปิดโอกาสให้ผู้เสพที่สมัครใจเข้ารับการบำบัดรักษาและฟื้นฟูสภาพจนครบหลักสูตร ได้รับการยกเว้นความผิดฐานเสพและไม่ต้องมีประวัติอาชญากรรม'
+            },
+            {
+                topic: 'หมวด: กฎหมายพืชกระท่อมและสูตรผสม',
+                question: '6. ข้อใดเป็นการกระทำที่ "ผิดกฎหมาย" แม้ว่าพืชกระท่อมจะถูกปลดล็อกจากบัญชียาเสพติดประเภท 5 แล้วก็ตาม?',
+                options: [
+                    'ปลูกต้นกระท่อมไว้หลังบ้านเพื่อเคี้ยวใบสดเอง',
+                    'นำน้ำต้มกระท่อมมาผสมยาแก้ไอ (สูตร 4x100) หรือขายให้เยาวชนอายุต่ำกว่า 18 ปี',
+                    'ใช้ใบกระท่อมเป็นส่วนประกอบในตำรับยาแผนไทยที่ได้รับอนุญาต',
+                    'ศึกษาวิจัยสารสกัดจากใบกระท่อมในมหาวิทยาลัย'
+                ],
+                correct: 1,
+                explanation: 'พ.ร.บ. พืชกระท่อม พ.ศ. 2565 ห้ามขายให้ผู้มีอายุต่ำกว่า 18 ปี ห้ามขายในสถานศึกษา และห้ามนำไปผสมยาแผนปัจจุบัน/ยาแก้ไอ (4x100) ซึ่งมีความผิดตาม พ.ร.บ. ยา และ พ.ร.บ. อาหาร'
+            },
+            {
+                topic: 'หมวด: การปฐมพยาบาลฉุกเฉิน',
+                question: '7. เมื่อพบผู้เสพสารเสพติดเกินขนาด (Overdose) นอนหมดสติแต่ยังหายใจอยู่ ควรปฐมพยาบาลเบื้องต้นอย่างไรก่อนรถพยาบาล 1669 มาถึง?',
+                options: [
+                    'รีบกรอกน้ำเปล่าหรือนมใส่ปากเพื่อล้างพิษยา',
+                    'จับนอนหงายราบและหนุนหมอนสูงๆ',
+                    'จับนอนตะแคงกึ่งคว่ำ (Recovery Position) เชยคางเปิดทางเดินหายใจเพื่อป้องกันการสำลักอาเจียน',
+                    'นำน้ำแข็งก้อนใหญ่มาประคบทั่วหน้าอกทันที'
+                ],
+                correct: 2,
+                explanation: 'การจัดท่านอนตะแคงกึ่งคว่ำ (Recovery Position) ช่วยป้องกันไม่ให้ลิ้นตกไปอุดกั้นทางเดินหายใจและป้องกันการสำลักอาเจียนลงปอด และห้ามกรอกน้ำใส่ปากผู้หมดสติเด็ดขาด'
+            },
+            {
+                topic: 'หมวด: ช่องทางช่วยเหลือในประเทศไทย',
+                question: '8. หากคนในครอบครัวต้องการปรึกษาแนวทางการเลิกยาเสพติดกับผู้เชี่ยวชาญฟรีตลอด 24 ชั่วโมง ควรโทรไปที่หมายเลขใด?',
+                options: [
+                    'สายด่วน 1165 (สถาบันบำบัดรักษาและฟื้นฟูผู้ติดยาเสพติดแห่งชาติบรมราชชนนี)',
+                    'สายด่วน 1112',
+                    'สายด่วน 1150',
+                    'สายด่วน 1130'
+                ],
+                correct: 0,
+                explanation: 'สายด่วน 1165 ของ สบยช. กรมการแพทย์ ให้คำปรึกษาปัญหาสารเสพติดและแนวทางการส่งต่อบำบัดรักษาฟรีตลอด 24 ชั่วโมง'
+            }
+        ];
+
+        let qIndex = 0;
+        let qScore = 0;
+        let qLocked = false;
+
+        function renderQuizQuestion() {
+            qLocked = false;
+            const item = quizQuestions[qIndex];
+
+            document.getElementById('q-index').textContent = qIndex + 1;
+            document.getElementById('q-progress').style.width = `${((qIndex + 1) / quizQuestions.length) * 100}%`;
+            document.getElementById('q-topic-tag').textContent = item.topic;
+            document.getElementById('q-text').textContent = item.question;
+
+            const expBox = document.getElementById('q-explanation');
+            expBox.classList.add('hidden');
+            document.getElementById('q-next-btn').classList.add('hidden');
+
+            const optionsBox = document.getElementById('q-options');
+            optionsBox.innerHTML = item.options.map((opt, idx) => `
+                <button onclick="checkQuizAnswer(${idx}, this)" class="q-opt-btn w-full text-left p-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/60 text-slate-200 text-xs sm:text-sm font-medium transition flex items-center justify-between gap-3">
+                    <span>${opt}</span>
+                    <i class="fa-regular fa-circle text-slate-600 shrink-0"></i>
+                </button>
+            `).join('');
+        }
+
+        function checkQuizAnswer(selectedIdx, btn) {
+            if (qLocked) return;
+            qLocked = true;
+
+            const item = quizQuestions[qIndex];
+            const allBtns = document.querySelectorAll('.q-opt-btn');
+            allBtns.forEach(b => b.classList.add('pointer-events-none'));
+
+            const expBox = document.getElementById('q-explanation');
+
+            if (selectedIdx === item.correct) {
+                qScore++;
+                document.getElementById('q-score').textContent = qScore;
+                btn.className = 'q-opt-btn w-full text-left p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500 text-emerald-200 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3';
+                btn.querySelector('i').className = 'fa-solid fa-circle-check text-emerald-400 shrink-0';
+
+                expBox.className = 'p-4 rounded-2xl border bg-emerald-500/10 border-emerald-500/30 text-emerald-200 text-xs sm:text-sm leading-relaxed block';
+                expBox.innerHTML = `<strong class="text-emerald-400"><i class="fa-solid fa-check-circle mr-1"></i> ถูกต้อง!</strong> ${item.explanation}`;
+            } else {
+                btn.className = 'q-opt-btn w-full text-left p-4 rounded-2xl bg-rose-500/20 border border-rose-500 text-rose-200 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3';
+                btn.querySelector('i').className = 'fa-solid fa-circle-xmark text-rose-400 shrink-0';
+
+                const rightBtn = allBtns[item.correct];
+                rightBtn.className = 'q-opt-btn w-full text-left p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500 text-emerald-200 text-xs sm:text-sm font-semibold flex items-center justify-between gap-3';
+                rightBtn.querySelector('i').className = 'fa-solid fa-circle-check text-emerald-400 shrink-0';
+
+                expBox.className = 'p-4 rounded-2xl border bg-rose-500/10 border-rose-500/30 text-rose-200 text-xs sm:text-sm leading-relaxed block';
+                expBox.innerHTML = `<strong class="text-rose-400"><i class="fa-solid fa-circle-info mr-1"></i> เฉลย:</strong> ${item.explanation}`;
+            }
+
+            const nextBtn = document.getElementById('q-next-btn');
+            nextBtn.innerHTML = qIndex === quizQuestions.length - 1
+                ? '<span>ดูสรุปผลและรับเกียรติบัตร</span> <i class="fa-solid fa-award"></i>'
+                : '<span>ข้อถัดไป</span> <i class="fa-solid fa-arrow-right"></i>';
+            nextBtn.classList.remove('hidden');
+        }
+
+        function handleNextQuestion() {
+            qIndex++;
+            if (qIndex < quizQuestions.length) {
+                renderQuizQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-header').classList.add('hidden');
+            document.getElementById('quiz-body').classList.add('hidden');
+
+            const pct = Math.round((qScore / quizQuestions.length) * 100);
+            document.getElementById('final-score-num').textContent = qScore;
+            document.getElementById('final-percent').textContent = pct;
+            document.getElementById('cert-score-tag').textContent = `${qScore}/${quizQuestions.length} (${pct}%)`;
+
+            const today = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('cert-date').textContent = `วันที่ออกบัตร: ${today}`;
+
+            let msg = '';
+            if (qScore >= 7) {
+                msg = 'ยอดเยี่ยมมาก! คุณมีความรู้ความเข้าใจเชิงลึกทั้งด้านกลไกสมอง กฎหมายไทย และการปฐมพยาบาล สามารถเป็นแกนนำป้องกันภัยสารเสพติดได้';
+            } else if (qScore >= 5) {
+                msg = 'ทำได้ดี! คุณมีความเข้าใจพื้นฐานที่ดี แนะนำให้ทบทวนรายละเอียดในคลังข้อมูลเพิ่มเติมเพื่อความรู้ที่ครบถ้วนยิ่งขึ้น';
+            } else {
+                msg = 'เริ่มต้นได้ดี! ลองสำรวจคลังข้อมูลสารเสพติดและแบบจำลองสมองด้านบนเพิ่มเติม แล้วกลับมาทำแบบทดสอบอีกครั้งเพื่อเพิ่มคะแนน';
+            }
+            document.getElementById('final-feedback-text').textContent = msg;
+
+            document.getElementById('quiz-result-panel').classList.remove('hidden');
+        }
+
+        function updateCertificateName() {
+            const val = document.getElementById('cert-name-input').value.trim();
+            document.getElementById('cert-display-name').textContent = val || 'ผู้ผ่านการทดสอบความรู้';
+        }
+
+        function restartQuiz() {
+            qIndex = 0;
+            qScore = 0;
+            document.getElementById('q-score').textContent = '0';
+            document.getElementById('quiz-result-panel').classList.add('hidden');
+            document.getElementById('quiz-header').classList.remove('hidden');
+            document.getElementById('quiz-body').classList.remove('hidden');
+            renderQuizQuestion();
+        }
+
+        // ---------------------------------------------------------------------
+        // 5. WARNING CHECKLIST & MOBILE MENU
+        // ---------------------------------------------------------------------
+        function updateChecklist() {
+            const checkedCount = document.querySelectorAll('.warn-chk:checked').length;
+            document.getElementById('checklist-counter').textContent = `พบ ${checkedCount} / 8 ข้อ`;
+
+            const adviceBox = document.getElementById('checklist-advice');
+            if (checkedCount === 0) {
+                adviceBox.className = 'p-4 rounded-2xl bg-slate-900 border border-slate-800 text-xs text-slate-300 leading-relaxed';
+                adviceBox.innerHTML = `<strong class="text-emerald-400">คำแนะนำ:</strong> ติ๊กเลือกพฤติกรรมที่สังเกตเห็นด้านบนเพื่อรับแนวทางการพูดคุยและปรึกษาผู้เชี่ยวชาญ`;
+            } else if (checkedCount <= 2) {
+                adviceBox.className = 'p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-200 leading-relaxed';
+                adviceBox.innerHTML = `<strong>ระดับเฝ้าระวังเบื้องต้น (${checkedCount} ข้อ):</strong> พฤติกรรมบางส่วนอาจเกิดจากความเครียดหรือการพักผ่อนน้อย ควรเปิดใจพูดคุยรับฟังด้วยความห่วงใยโดยไม่กล่าวโทษ`;
+            } else if (checkedCount <= 5) {
+                adviceBox.className = 'p-4 rounded-2xl bg-orange-500/15 border border-orange-500/40 text-xs text-orange-200 leading-relaxed';
+                adviceBox.innerHTML = `<strong>ระดับความเสี่ยงปานกลาง-สูง (${checkedCount} ข้อ):</strong> พบสัญญาณเตือนหลายประการ แนะนำให้โทรปรึกษาผู้เชี่ยวชาญที่สายด่วน <strong>1165</strong> หรือ <strong>1323</strong> เพื่อวางแผนการเข้าหาและตรวจคัดกรองอย่างเหมาะสม`;
+            } else {
+                adviceBox.className = 'p-4 rounded-2xl bg-rose-500/15 border border-rose-500/40 text-xs text-rose-200 leading-relaxed';
+                adviceBox.innerHTML = `<strong>ระดับความเสี่ยงสูงมาก (${checkedCount} ข้อ):</strong> มีแนวโน้มสูงว่ากำลังใช้สารเสพติด ควรติดต่อ <strong>สายด่วน 1165</strong> ทันทีเพื่อรับคำแนะนำในการนำเข้าสู่กระบวนการบำบัดรักษาอย่างปลอดภัย`;
+            }
+        }
+
+        function toggleMobileMenu() {
+            const nav = document.getElementById('mobile-nav');
+            nav.classList.toggle('hidden');
+        }
+
+        // ---------------------------------------------------------------------
+        // INITIALIZATION ON LOAD
+        // ---------------------------------------------------------------------
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSubstances();
+            setBrainState('normal');
+            animateBrainCanvas();
+            selectOrgan('brain');
+            renderQuizQuestion();
+        });
+    </script>
+</body>
+</html>
